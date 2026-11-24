@@ -69,7 +69,7 @@ export const PHYSICS_LEVELS: Record<"facile" | "moyen" | "difficile", PhysicsLev
     keys: ["=", "×", "/", "²", "(", ")"],
     extraKeys: [
       "E", "m", "v", "F", "G", "m1", "m2", "r", "P", "S", "λ", "c", "f", "ρ", "g", "h",
-      "k", "q1", "q2", "Ep",
+      "k", "q1", "q2", "Ep", "p", "Q", "ΔT", "t",
     ],
     bank: [
       { tokens: ["E", "=", "(", "1", "/", "2", ")", "m", "v", "²"], domaine: "Énergie" },
@@ -88,6 +88,12 @@ export const PHYSICS_LEVELS: Record<"facile" | "moyen" | "difficile", PhysicsLev
       { tokens: ["k", "=", "F", "r", "²", "/", "(", "q1", "q2", ")"], domaine: "Électricité" },
       { tokens: ["Ep", "=", "m", "×", "g", "×", "h"], domaine: "Énergie" },
       { tokens: ["m", "=", "Ep", "/", "(", "g", "×", "h", ")"], domaine: "Énergie" },
+      { tokens: ["p", "=", "m", "×", "v"], domaine: "Mécanique" },
+      { tokens: ["v", "=", "p", "/", "m"], domaine: "Mécanique" },
+      { tokens: ["Q", "=", "m", "×", "c", "×", "ΔT"], domaine: "Thermique" },
+      { tokens: ["ΔT", "=", "Q", "/", "(", "m", "×", "c", ")"], domaine: "Thermique" },
+      { tokens: ["E", "=", "P", "×", "t"], domaine: "Énergie" },
+      { tokens: ["P", "=", "E", "/", "t"], domaine: "Énergie" },
     ],
   },
 };

@@ -114,6 +114,14 @@ const FACILE: ChemEquation[] = [
   { reactants: ["S", "O2"], products: ["SO2"], coeffs: [1, 1, 1] },
   { reactants: ["C", "O2"], products: ["CO2"], coeffs: [1, 1, 1] },
   { reactants: ["Zn", "S"], products: ["ZnS"], coeffs: [1, 1, 1] },
+  { reactants: ["Ca", "Cl2"], products: ["CaCl2"], coeffs: [1, 1, 1] },
+  { reactants: ["K", "Cl2"], products: ["KCl"], coeffs: [2, 1, 2] },
+  { reactants: ["Fe", "S"], products: ["FeS"], coeffs: [1, 1, 1] },
+  { reactants: ["Cu", "O2"], products: ["CuO"], coeffs: [2, 1, 2] },
+  { reactants: ["Ba", "O2"], products: ["BaO"], coeffs: [2, 1, 2] },
+  { reactants: ["H2", "Br2"], products: ["HBr"], coeffs: [1, 1, 2] },
+  { reactants: ["Li", "Cl2"], products: ["LiCl"], coeffs: [2, 1, 2] },
+  { reactants: ["N2", "O2"], products: ["NO"], coeffs: [1, 1, 2] },
 ];
 
 const MOYEN: ChemEquation[] = [
@@ -129,6 +137,14 @@ const MOYEN: ChemEquation[] = [
   { reactants: ["P4", "O2"], products: ["P2O5"], coeffs: [1, 5, 2] },
   { reactants: ["C2H4", "O2"], products: ["CO2", "H2O"], coeffs: [1, 3, 2, 2] },
   { reactants: ["CuO", "H2"], products: ["Cu", "H2O"], coeffs: [1, 1, 1, 1] },
+  { reactants: ["Al", "Cl2"], products: ["AlCl3"], coeffs: [2, 3, 2] },
+  { reactants: ["H2O2"], products: ["H2O", "O2"], coeffs: [2, 2, 1] },
+  { reactants: ["Fe", "Cl2"], products: ["FeCl3"], coeffs: [2, 3, 2] },
+  { reactants: ["Mg", "N2"], products: ["Mg3N2"], coeffs: [3, 1, 1] },
+  { reactants: ["NaOH", "HCl"], products: ["NaCl", "H2O"], coeffs: [1, 1, 1, 1] },
+  { reactants: ["CO", "O2"], products: ["CO2"], coeffs: [2, 1, 2] },
+  { reactants: ["Fe", "HCl"], products: ["FeCl2", "H2"], coeffs: [1, 2, 1, 1] },
+  { reactants: ["K", "H2O"], products: ["KOH", "H2"], coeffs: [2, 2, 2, 1] },
 ];
 
 const DIFFICILE: ChemEquation[] = [
@@ -148,6 +164,14 @@ const DIFFICILE: ChemEquation[] = [
   { reactants: ["KClO3"], products: ["KCl", "O2"], coeffs: [2, 2, 3] },
   { reactants: ["C8H18", "O2"], products: ["CO2", "H2O"], coeffs: [2, 25, 16, 18] },
   { reactants: ["C2H5OH", "O2"], products: ["CO2", "H2O"], coeffs: [1, 3, 2, 3] },
+  { reactants: ["C5H12", "O2"], products: ["CO2", "H2O"], coeffs: [1, 8, 5, 6] },
+  { reactants: ["C2H2", "O2"], products: ["CO2", "H2O"], coeffs: [2, 5, 4, 2] },
+  { reactants: ["Cu", "HNO3"], products: ["Cu(NO3)2", "NO", "H2O"], coeffs: [3, 8, 3, 2, 4] },
+  { reactants: ["CH3OH", "O2"], products: ["CO2", "H2O"], coeffs: [2, 3, 2, 4] },
+  { reactants: ["Fe2O3", "H2"], products: ["Fe", "H2O"], coeffs: [1, 3, 2, 3] },
+  { reactants: ["Al", "HCl"], products: ["AlCl3", "H2"], coeffs: [2, 6, 2, 3] },
+  { reactants: ["NaHCO3"], products: ["Na2CO3", "CO2", "H2O"], coeffs: [2, 1, 1, 1] },
+  { reactants: ["Ca(OH)2", "HCl"], products: ["CaCl2", "H2O"], coeffs: [1, 2, 1, 2] },
 ];
 
 export function pickChemEquation(level: "facile" | "moyen" | "difficile"): ChemEquation {

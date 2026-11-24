@@ -26,7 +26,7 @@ export function ScienceInfoPanel({ subject }: ScienceInfoPanelProps) {
       <>
         <b>Formules :</b> devine la formule physique secrète avant d'épuiser tes essais, comme en
         mode Classique — un indice affiché en haut donne le domaine (Mécanique, Énergie,
-        Électricité, Ondes, Gravitation ou Pression). Chaque case devient{" "}
+        Électricité, Ondes, Gravitation, Pression ou Thermique). Chaque case devient{" "}
         <b style={{ color: "var(--state-correct)" }}>verte</b> (bon caractère, bonne place) ou{" "}
         <b style={{ color: "var(--state-present)" }}>orange</b> (bon caractère, mauvaise place)
         après validation.

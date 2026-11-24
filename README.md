@@ -35,6 +35,22 @@ formule de physique, le tout dans l'interface d'une calculatrice graphique.
 
 Les trois mini-jeux partagent une seule série de bonnes réponses.
 
+### Programmation
+
+- **JavaScript, Python, Java et C++** : le même exercice est traduit dans
+  les 4 langages (somme, factorielle, PGCD, FizzBuzz, Fibonacci...),
+  sur 3 niveaux, soit 72 exercices au total.
+- **Page blanche** : retrouve tout le code de la fonction, token par token.
+- **Extrait à trous** : le squelette (mots-clés, ponctuation) est affiché,
+  il ne reste que les noms, valeurs et opérateurs à deviner.
+
+### En chiffres
+
+- 60 équations chimiques à équilibrer, 55 formules physiques, 69
+  énigmes de niveau Impossible et 72 exercices de programmation.
+- Les modes Classique, Cible libre et Conversions sont générés à
+  l'infini.
+
 ### Mode Série vs Énigme du jour
 
 Chaque matière propose deux façons de jouer :
