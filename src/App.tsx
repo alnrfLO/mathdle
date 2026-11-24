@@ -204,7 +204,10 @@ function App() {
       <div className="calculator">
         <div className="calculator__brandrow">
           {subject === "menu" ? (
-            <span className="calculator__brand">MATHDLE-92</span>
+            <span className="calculator__brand">
+              <img src="/favicon.svg" alt="" width={14} height={14} className="calculator__brand-logo" />
+              MATHDLE-92
+            </span>
           ) : (
             <button
               type="button"
@@ -266,7 +269,17 @@ function App() {
 
         <div className="calculator__screen-frame">
           <div className="calculator__screen">
-            {subject === "menu" && <SubjectMenu onChoose={setSubject} />}
+            {subject === "menu" && (
+              <SubjectMenu
+                onChoose={setSubject}
+                onDaily={() => {
+                  setSubject("math");
+                  setPlayMode("daily");
+                }}
+                dailyDone={mathDaily.alreadyPlayedToday}
+                dayStreak={mathDaily.dayStreak}
+              />
+            )}
 
             {subject === "prog" && !progLang && <LangMenu onChoose={chooseLang} />}
 
