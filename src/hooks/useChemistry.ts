@@ -32,12 +32,18 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
   const [attempts, setAttempts] = useState(0);
   const [lives, setLives] = useState(MAX_LIVES);
   const [gameOver, setGameOver] = useState(false);
+  // En difficile, certains coefficients ont 2 chiffres (ex : 13, 25) : on
+  // garde le curseur sur la case après le 1er chiffre, et on passe à la
+  // suivante après le 2e chiffre ou avec la touche "→".
+  const [typedInSlot, setTypedInSlot] = useState(false);
+  const twoDigits = level === "difficile";
 
   const newEquation = useCallback((lvl: Level) => {
     const eq = pickChemEquation(lvl);
     setEquation(eq);
     setCoeffs(emptyCoeffs(eq));
     setActiveIndex(0);
+    setTypedInSlot(false);
     setAttempts(0);
     setMessage(EMPTY_MESSAGE);
     setGameOver(false);
@@ -54,6 +60,7 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
   const selectSlot = useCallback((i: number) => {
     if (gameOver) return;
     setActiveIndex(i);
+    setTypedInSlot(false);
   }, [gameOver]);
 
   const total = equation.reactants.length + equation.products.length;
@@ -61,16 +68,44 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
   const typeChar = useCallback(
     (d: string) => {
       if (gameOver) return;
+      if (d === "→") {
+        setActiveIndex((i) => Math.min(i + 1, total - 1));
+        setTypedInSlot(false);
+        return;
+      }
       const digit = Number(d);
       if (Number.isNaN(digit)) return;
+
+      if (!twoDigits) {
+        setCoeffs((c) => {
+          const next = [...c];
+          next[activeIndex] = digit;
+          return next;
+        });
+        setActiveIndex((i) => Math.min(i + 1, total - 1));
+        return;
+      }
+
+      const current = coeffs[activeIndex];
+      if (typedInSlot && current !== null && current < 10) {
+        // 2e chiffre : on complète le nombre et on passe à la case suivante.
+        setCoeffs((c) => {
+          const next = [...c];
+          next[activeIndex] = current * 10 + digit;
+          return next;
+        });
+        setActiveIndex((i) => Math.min(i + 1, total - 1));
+        setTypedInSlot(false);
+        return;
+      }
       setCoeffs((c) => {
         const next = [...c];
         next[activeIndex] = digit;
         return next;
       });
-      setActiveIndex((i) => Math.min(i + 1, total - 1));
+      setTypedInSlot(true);
     },
-    [gameOver, activeIndex, total]
+    [gameOver, activeIndex, total, twoDigits, coeffs, typedInSlot]
   );
 
   const backspace = useCallback(() => {
@@ -82,6 +117,7 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
       }
       return next;
     });
+    setTypedInSlot(false);
   }, [gameOver, activeIndex]);
 
   const check = useCallback(() => {
@@ -144,6 +180,7 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
     setLevel,
     selectSlot,
     typeChar,
+    twoDigits,
     backspace,
     check,
     skip,

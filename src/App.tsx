@@ -171,6 +171,11 @@ function App() {
             chemistry.check();
             return;
           }
+          if (e.key === "ArrowRight" || e.key === " ") {
+            e.preventDefault();
+            chemistry.typeChar("→");
+            return;
+          }
           if (/^[0-9]$/.test(e.key)) {
             chemistry.typeChar(e.key);
           }
@@ -592,7 +597,7 @@ function App() {
 
         {subject === "science" && playMode === "serie" && scienceGame === "chimie" && (
           <Keyboard
-            opKeys={[]}
+            opKeys={chemistry.twoDigits ? ["→"] : []}
             onKey={chemistry.typeChar}
             onBackspace={chemistry.backspace}
             onSubmit={chemistry.check}

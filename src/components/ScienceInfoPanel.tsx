@@ -18,7 +18,8 @@ export function ScienceInfoPanel({ subject }: ScienceInfoPanelProps) {
         (≥ 1). Un indice affiché en haut donne le type de réaction (synthèse, décomposition,
         combustion ou déplacement) pour te donner un point de départ. Contrairement au mode
         Impossible des maths, c'est un vrai calcul sur les atomes : n'importe quelle proportion
-        correcte et la plus simple possible est acceptée.
+        correcte et la plus simple possible est acceptée. En difficile, une case peut contenir 2
+        chiffres : tape un chiffre puis <b>→</b> pour passer à la case suivante.
       </>
     );
   } else if (subject === "formules") {
