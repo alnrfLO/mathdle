@@ -36,6 +36,9 @@ export function LegalNotice({ onClose }: LegalNoticeProps) {
           ce site sont la propriété de l'auteur, sauf mention contraire.
         </p>
 
+        <h3>Crédits</h3>
+        <p>Logo réalisé par Sylvain Belevindiran.</p>
+
         <h3>Données personnelles</h3>
         <p>
           Ce site ne collecte aucune donnée personnelle et ne dépose aucun cookie de suivi. La

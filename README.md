@@ -98,6 +98,10 @@ src/
   App.tsx          routage matière / mode de jeu, clavier physique
 ```
 
+## Crédits
+
+- Logo : Sylvain Belevindiran
+
 ## Auteur
 
 **Rafael Antunes Oliveira** — étudiant en développement web (BUT MMI)
