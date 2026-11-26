@@ -206,11 +206,12 @@ export const STARTER = {
 // Détecte un appel à une fonction native interdite (hors commentaires)
 export function bannedUsed(e: Exercise, code: string, lang: "python" | "javascript"): string | null {
   if (!e.banned) return null;
+  const list = bannedFor(e, lang);
   const clean = code
     .split("\n")
     .map((l) => l.replace(lang === "python" ? /#.*$/ : /\/\/.*$/, ""))
     .join("\n");
-  for (const b of e.banned) {
+  for (const b of list) {
     if (b.startsWith("[")) {
       if (clean.includes(b)) return b;
       continue;
@@ -220,4 +221,11 @@ export function bannedUsed(e: Exercise, code: string, lang: "python" | "javascri
     if (lang === "python" && b === "statistics" && /import\s+statistics|from\s+statistics/.test(clean)) return b;
   }
   return null;
+}
+
+const JS_ONLY = new Set(["Math.max", "reduce", "indexOf", "findIndex", "reverse"]);
+const PY_ONLY = new Set(["sum", "max", "sorted", "reversed", "[::-1]", "count", "index", "factorial", "math.prod", "mean", "statistics"]);
+
+export function bannedFor(e: Exercise, lang: "python" | "javascript"): string[] {
+  return (e.banned ?? []).filter((b) => (lang === "python" ? !JS_ONLY.has(b) : !PY_ONLY.has(b)));
 }

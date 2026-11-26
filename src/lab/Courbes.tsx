@@ -169,7 +169,7 @@ export function Courbes({ level }: { level: Difficulty }) {
 
   return (
     <LabShell eyebrow={`COURBES · ESSAI ${Math.min(guesses.length + 1, MAX)}/${MAX}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
-      <canvas ref={ref} className="lab__canvas" width={340} height={240} aria-label="Courbe à deviner" />
+      <canvas ref={ref} className="lab__canvas" width={320} height={320} aria-label="Courbe à deviner" />
       <div className="lab__row">
         <span className="lab__small">f(x) =</span>
         <input

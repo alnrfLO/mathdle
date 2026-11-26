@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ProgLevel } from "../game/programming";
 import { NO_MSG, err, ok, info, pick } from "./LabShell";
-import { EXERCISES, STARTER, bannedUsed, type Exercise } from "./exercises";
+import { EXERCISES, STARTER, bannedUsed, bannedFor, type Exercise } from "./exercises";
 import { runCode, deepEqual, show, TIMEOUT_MS, type RunResult } from "./runner";
 import { recordResult } from "./stats";
 import "./lab.css";
@@ -58,7 +58,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
   const run = async () => {
     if (busy) return;
     const banned = bannedUsed(ex, code, lang);
-    if (banned) return setMsg(err(`Interdit dans cet exercice : ${banned}(). Écris l'algorithme toi-même.`));
+    if (banned) return setMsg(err(`Interdit dans cet exercice : ${banned.startsWith("[") ? banned : banned + "()"}. Écris l'algorithme toi-même.`));
     const visible = ex.visible;
     const hidden = ex.hidden();
     const all = [...visible, ...hidden];
@@ -124,9 +124,9 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
           </b>
         </div>
         <div style={{ fontSize: "0.78rem", color: "var(--ink)", marginTop: 4 }}>{ex.enonce}</div>
-        {ex.banned && (
+        {bannedFor(ex, lang).length > 0 && (
           <div className="lab__small" style={{ marginTop: 4 }}>
-            Interdit : {ex.banned.join(", ")}
+            Interdit : {bannedFor(ex, lang).join(", ")}
           </div>
         )}
       </div>
@@ -186,7 +186,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
         )}
       </div>
       <p className="lab__small" style={{ textAlign: "center", margin: 0 }}>
-        Les tests appellent ta fonction directement : print ne sert qu'à déboguer. Délai max {TIMEOUT_MS / 1000} s. Ctrl+Entrée pour exécuter.
+        Les tests appellent ta fonction directement : {lang === "python" ? "print" : "console.log"} ne sert qu'à déboguer. Délai max {TIMEOUT_MS / 1000} s. Ctrl+Entrée pour exécuter.
       </p>
     </div>
   );

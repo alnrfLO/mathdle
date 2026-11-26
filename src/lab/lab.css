@@ -151,8 +151,8 @@
 
 .lab__canvas {
   width: 100%;
-  max-width: 340px;
-  aspect-ratio: 34 / 24;
+  max-width: 300px;
+  aspect-ratio: 1;
   display: block;
   margin: 0 auto;
   background: #e3ebdb;
@@ -240,4 +240,13 @@
 .share-btn {
   margin: 4px auto 0;
   display: block;
+}
+
+.legal-sheet table td,
+.legal-sheet table th {
+  padding: 4px 6px;
+}
+.legal-sheet table td:not(:first-child),
+.legal-sheet table th:not(:first-child) {
+  text-align: right;
 }

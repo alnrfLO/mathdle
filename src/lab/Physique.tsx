@@ -23,7 +23,7 @@ const UNITS: Record<Difficulty, UnitQ[]> = {
     { q: "Une intensité électrique", answer: "A (ampère)", accept: ["a", "ampere", "ampère"] },
     { q: "Une résistance électrique", answer: "Ω (ohm)", accept: ["ω", "ohm", "ohms"] },
     { q: "Une fréquence", answer: "Hz (hertz)", accept: ["hz", "hertz", "s-1", "1/s"] },
-    { q: "Une pression", answer: "Pa (pascal)", accept: ["pa", "pascal"] },
+    { q: "Une pression", answer: "Pa (pascal)", accept: ["pa", "pascal", "n/m2", "n.m-2"] },
   ],
   moyen: [
     { q: "Une vitesse", answer: "m/s", accept: ["m/s", "m.s-1", "m·s-1", "ms-1"] },
