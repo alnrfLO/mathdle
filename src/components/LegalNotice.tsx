@@ -37,7 +37,7 @@ export function LegalNotice({ onClose }: LegalNoticeProps) {
         </p>
 
         <h3>Crédits</h3>
-        <p>Logo réalisé par Sylvain Belevindiran.</p>
+        <p>Logo réalisé par <a href="https://portfolio-sylvain-belevindiran.vercel.app" target="_blank" rel="noopener noreferrer">Sylvain Belevindiran</a>.</p>
 
         <h3>Données personnelles</h3>
         <p>

@@ -100,7 +100,7 @@ src/
 
 ## Crédits
 
-- Logo : Sylvain Belevindiran
+- Logo : [Sylvain Belevindiran](https://portfolio-sylvain-belevindiran.vercel.app)
 
 ## Auteur
 
