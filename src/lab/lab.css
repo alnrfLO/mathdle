@@ -270,3 +270,15 @@
 .legal-sheet table th:not(:first-child) {
   text-align: right;
 }
+
+.lab__hint {
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px dashed var(--state-correct);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--ink);
+  text-align: center;
+}

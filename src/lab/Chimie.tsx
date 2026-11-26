@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Difficulty } from "../game/types";
 import { LabShell, NO_MSG, err, ok, pick } from "./LabShell";
-import { ELEMENTS, findElement, molarMass, type El } from "./elements";
+import { ELEMENTS, atomCounts, findElement, molarMass, type El } from "./elements";
 import { parseNumber, fmt } from "./expr";
 import { recordResult } from "./stats";
 
@@ -50,8 +50,14 @@ export function ElementMystere({ level }: { level: Difficulty }) {
   const cmp = (a: number, b: number, tol: number) => (a === b ? "cell-ok" : Math.abs(a - b) <= tol ? "cell-near" : "cell-no");
   const arrow = (a: number, b: number) => (a === b ? "" : a < b ? " ↑" : " ↓");
 
+  const giveUp = () => {
+    setMsg(err(`C'était ${target.nom} (${target.sym}), Z = ${target.z}`));
+    setDone(true);
+    recordResult("element", false);
+  };
+
   return (
-    <LabShell eyebrow={`ÉLÉMENT MYSTÈRE (ESSAI ${Math.min(rows.length + 1, EL_MAX)}/${EL_MAX}, Z ≤ ${POOL[level]})`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={`Il est dans la période ${target.period} du tableau`} onGiveUp={giveUp} round={target} eyebrow={`ÉLÉMENT MYSTÈRE (ESSAI ${Math.min(rows.length + 1, EL_MAX)}/${EL_MAX}, Z ≤ ${POOL[level]})`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__small" style={{ textAlign: "center" }}>
         Vert = exact, jaune = proche. Les flèches disent si la cible est plus haut ou plus bas.
       </div>
@@ -141,8 +147,15 @@ export function MasseMolaire({ level }: { level: Difficulty }) {
 
   const used = Array.from(new Set(f.match(/[A-Z][a-z]?/g) ?? []));
 
+  const giveUp = () => {
+    setMsg(err(`M(${f}) = ${fmt(M, 5)} g/mol`));
+    setDone(true);
+    recordResult("masse", false);
+  };
+  const masseHint = `${sub(f)} contient ${atomCounts(f).map(([s, n]) => `${n} ${s}`).join(", ")}. Multiplie chaque masse par son nombre d'atomes, puis additionne`;
+
   return (
-    <LabShell eyebrow="MASSE MOLAIRE (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={masseHint} onGiveUp={giveUp} round={f} eyebrow="MASSE MOLAIRE (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Calcule la masse molaire de</div>
         <div className="lab__big">{sub(f)}</div>
@@ -252,8 +265,16 @@ export function Redox({ level }: { level: Difficulty }) {
       </span>
     ));
 
+  const giveUp = () => {
+    setVals(terms.map((x) => String(x[0])));
+    setMsg(err("Voici la bonne demi-équation"));
+    setDone(true);
+    recordResult("redox", false);
+  };
+  const electrons = terms.find((t) => t[1] === "e⁻")?.[0] ?? 0;
+
   return (
-    <LabShell eyebrow={`OXYDORÉDUCTION, COUPLE ${h.couple}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={`Il faut ${electrons} électron${electrons > 1 ? "s" : ""} (e⁻)`} onGiveUp={giveUp} round={h} eyebrow={`OXYDORÉDUCTION, COUPLE ${h.couple}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Équilibre la demi-équation (milieu acide). Case vide = 1.</div>
         <div className="lab__eq">

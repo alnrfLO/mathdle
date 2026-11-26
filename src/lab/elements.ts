@@ -72,3 +72,43 @@ function parseGroup(s: string): number {
   if (i < s.length) throw new Error("formule mal formée");
   return r;
 }
+
+export function atomCounts(formula: string): [string, number][] {
+  const out = new Map<string, number>();
+  const add = (sym: string, n: number) => out.set(sym, (out.get(sym) ?? 0) + n);
+  for (const part of formula.replace(/\s/g, "").split(/[·.*]/)) {
+    const m = part.match(/^(\d+)(.*)$/);
+    const k = m ? Number(m[1]) : 1;
+    const body = m ? m[2] : part;
+    const stack: Map<string, number>[] = [new Map()];
+    let i = 0;
+    while (i < body.length) {
+      const ch = body[i];
+      if (ch === "(") {
+        stack.push(new Map());
+        i++;
+        continue;
+      }
+      const num = () => {
+        const n = body.slice(i).match(/^\d+/);
+        if (n) i += n[0].length;
+        return n ? Number(n[0]) : 1;
+      };
+      if (ch === ")") {
+        i++;
+        const inner = stack.pop()!;
+        const mult = num();
+        const top = stack[stack.length - 1];
+        inner.forEach((v, sym) => top.set(sym, (top.get(sym) ?? 0) + v * mult));
+        continue;
+      }
+      const el = body.slice(i).match(/^[A-Z][a-z]?/);
+      if (!el) break;
+      i += el[0].length;
+      const top = stack[stack.length - 1];
+      top.set(el[0], (top.get(el[0]) ?? 0) + num());
+    }
+    stack[0].forEach((v, sym) => add(sym, v * k));
+  }
+  return [...out.entries()];
+}

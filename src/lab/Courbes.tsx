@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Difficulty } from "../game/types";
 import { LabShell, NO_MSG, err, ok, pick, randInt } from "./LabShell";
-import { compile, ExprError } from "./expr";
+import { compile, ExprError, fmt } from "./expr";
 import { recordResult } from "./stats";
 
 interface Target {
@@ -39,6 +39,29 @@ function makeTarget(level: Difficulty): Target {
     src = pick(["x sin(x)", "exp(-x^2)*4", "ln(x^2+1)", "sin(x)+cos(x)", "x^3 - 3x", "2sin(x/2)", "1/(x^2+1)*3"]);
   }
   return { src: src.replace(/\+ 0$|- 0$/, "").replace(/^1x/, "x").replace(/^-1x/, "-x").replace(/ 1x/, " x").trim(), fn: compile(src).fn };
+}
+
+function courbeHint(t: Target): string {
+  const s = t.src;
+  const family = /sin|cos/.test(s)
+    ? "C'est une fonction trigonométrique (sin ou cos)"
+    : /exp/.test(s)
+      ? "Il y a une exponentielle"
+      : /ln/.test(s)
+        ? "Il y a un logarithme (ln)"
+        : /sqrt/.test(s)
+          ? "Il y a une racine carrée"
+          : /abs/.test(s)
+            ? "Il y a une valeur absolue (courbe en V)"
+            : /\/x|\/\(/.test(s)
+              ? "Il y a une division par x"
+              : /\^3/.test(s)
+                ? "Il y a un x au cube"
+                : /\^2/.test(s)
+                  ? "C'est une parabole (x²)"
+                  : "C'est une droite : f(x) = ax + b";
+  const y0 = t.fn(0);
+  return Number.isFinite(y0) ? `${family}. Elle passe par f(0) = ${fmt(y0, 3)}` : family;
 }
 
 const XMIN = -5;
@@ -164,8 +187,14 @@ export function Courbes({ level }: { level: Difficulty }) {
     }
   };
 
+  const giveUp = () => {
+    setMsg(err(`C'était f(x) = ${target.src}`));
+    setDone(true);
+    recordResult("courbes", false);
+  };
+
   return (
-    <LabShell eyebrow={`COURBES (ESSAI ${Math.min(guesses.length + 1, MAX)}/${MAX})`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={courbeHint(target)} onGiveUp={giveUp} round={target} eyebrow={`COURBES (ESSAI ${Math.min(guesses.length + 1, MAX)}/${MAX})`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <canvas ref={ref} className="lab__canvas" width={320} height={320} aria-label="Courbe à deviner" />
       <div className="lab__row">
         <span className="lab__small">f(x) =</span>

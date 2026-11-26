@@ -90,8 +90,14 @@ export function Unites({ level }: { level: Difficulty }) {
     } else setMsg(err(`Non (essai ${t}/3)`));
   };
 
+  const giveUp = () => {
+    setMsg(err(`C'était ${q.answer}`));
+    setDone(true);
+    recordResult("unites", false);
+  };
+
   return (
-    <LabShell eyebrow="TROUVER L'UNITÉ (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={`Elle commence par « ${q.answer[0]} »`} onGiveUp={giveUp} round={q} eyebrow="TROUVER L'UNITÉ (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Dans quelle unité SI s'exprime…</div>
         <div className="lab__big">{q.q}</div>
@@ -237,8 +243,14 @@ export function Applications({ level }: { level: Difficulty }) {
     } else setMsg(err(!unitOk ? `Mauvaise unité (essai ${t}/3)` : `Valeur fausse, ${v < target ? "trop petite" : "trop grande"} (essai ${t}/3)`));
   };
 
+  const giveUp = () => {
+    setMsg(err(`${fmt(p.value, 4)} ${p.unit} (${p.hint})`));
+    setDone(true);
+    recordResult("an", false);
+  };
+
   return (
-    <LabShell eyebrow="APPLICATION NUMÉRIQUE, VALEUR ET UNITÉ" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={`Formule : ${p.hint}`} onGiveUp={giveUp} round={p} eyebrow="APPLICATION NUMÉRIQUE, VALEUR ET UNITÉ" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div style={{ fontSize: "0.85rem", color: "var(--ink)" }}>{p.text}</div>
         <div className="lab__small" style={{ marginTop: 6 }}>Précision acceptée : 2 %</div>
@@ -368,8 +380,14 @@ export function Chaine({ level }: { level: Difficulty }) {
     }
   };
 
+  const giveUp = () => {
+    setMsg(err(`${c.from} = ${fmt(c.answer, 4)} ${c.to} (${c.steps})`));
+    setDone(true);
+    recordResult("chaine", false);
+  };
+
   return (
-    <LabShell eyebrow="CONVERSIONS EN CHAÎNE (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={c.steps} onGiveUp={giveUp} round={c} eyebrow="CONVERSIONS EN CHAÎNE (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Convertis</div>
         <div className="lab__big">

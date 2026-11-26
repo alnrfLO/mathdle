@@ -5,6 +5,9 @@ import { EXERCISES, STARTER, bannedUsed, bannedFor, type Exercise } from "./exer
 import { runCode, deepEqual, show, TIMEOUT_MS, type RunResult } from "./runner";
 import { recordResult } from "./stats";
 import "./lab.css";
+import "./codegrid.css";
+import "../components/HelpBar.css";
+import { SOLUTIONS } from "./solutions";
 
 type Lang = "python" | "javascript";
 
@@ -31,9 +34,12 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
   const [busy, setBusy] = useState(false);
   const [solved, setSolved] = useState(false);
   const [counted, setCounted] = useState(false);
+  const [help, setHelp] = useState<"none" | "hint" | "solution">("none");
+  const sol = SOLUTIONS[ex.id];
 
   const load = (e: Exercise) => {
     setEx(e);
+    setHelp("none");
     setCode(STARTER[lang](e));
     setLines(null);
     setLogs([]);
@@ -45,6 +51,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
     setKey(`${lang}-${level}`);
     const e = pick(pool);
     setEx(e);
+    setHelp("none");
     setCode(STARTER[lang](e));
     setLines(null);
     setLogs([]);
@@ -168,6 +175,29 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
         <pre className="code-console" aria-label="Sortie console">
           {logs.join("\n")}
         </pre>
+      )}
+      {!solved && sol && (
+        <div className="helpbar">
+          <div className="helpbar__actions">
+            <button type="button" className="helpbar__btn" disabled={help !== "none"} onClick={() => setHelp("hint")}>
+              Indice
+            </button>
+            <button
+              type="button"
+              className="helpbar__btn helpbar__btn--ghost"
+              disabled={help === "solution"}
+              onClick={() => {
+                if (!counted) recordResult("console", false);
+                setCounted(true);
+                setHelp("solution");
+              }}
+            >
+              Voir la solution
+            </button>
+          </div>
+          {help === "hint" && <p className="lab__hint">{sol.hint}</p>}
+          {help === "solution" && <pre className="solution-code">{lang === "python" ? sol.py : sol.js}</pre>}
+        </div>
       )}
       <div className="science__actions">
         {solved ? (

@@ -67,8 +67,15 @@ export function CiblePi() {
     }
   };
 
+  const giveUp = () => {
+    setMsg(err(`Une solution : ${2 * target.p}*π/${2 * target.q}`));
+    setDone(true);
+    recordResult("pi", false);
+  };
+  const piHint = `Pars de π/${2 * target.q} : combien de fois en faut-il pour faire ${target.label} ?`;
+
   return (
-    <LabShell eyebrow={`CIBLE π (${minOps} OPÉRATIONS MINIMUM)`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell hint={piHint} onGiveUp={giveUp} round={target} eyebrow={`CIBLE π (${minOps} OPÉRATIONS MINIMUM)`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Construis une expression égale à</div>
         <div className="lab__big">{target.label}</div>

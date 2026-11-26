@@ -100,3 +100,33 @@ describe("solution display", () => {
     expect(solutionCode(tokens, "python")).toBe("def f(n):\n    return n + 1");
   });
 });
+
+describe("console solutions", () => {
+  it("when any exercise is opened, it has a hint and a solution in both languages", async () => {
+    const { SOLUTIONS } = await import("../../src/lab/solutions");
+    for (const e of EXERCISES) {
+      expect(SOLUTIONS[e.id], e.id).toBeDefined();
+      expect(SOLUTIONS[e.id].js).toContain(`function ${e.js}(`);
+      expect(SOLUTIONS[e.id].py).toContain(`def ${e.py}(`);
+    }
+  });
+
+  it("when a shown solution is checked against the rules, it never uses a banned function", async () => {
+    const { SOLUTIONS } = await import("../../src/lab/solutions");
+    for (const e of EXERCISES) {
+      expect(bannedUsed(e, SOLUTIONS[e.id].js, "javascript"), e.id).toBeNull();
+      expect(bannedUsed(e, SOLUTIONS[e.id].py, "python"), e.id).toBeNull();
+    }
+  });
+
+  it("when a JavaScript solution runs on the visible and hidden tests, every answer matches the reference", async () => {
+    const { SOLUTIONS } = await import("../../src/lab/solutions");
+    for (const e of EXERCISES) {
+      const fn = new Function(`${SOLUTIONS[e.id].js}; return ${e.js};`)();
+      for (const args of [...e.visible, ...e.hidden()]) {
+        const expected = (e.ref as (...a: unknown[]) => unknown)(...structuredClone(args));
+        expect(fn(...structuredClone(args)), `${e.id}(${JSON.stringify(args)})`).toEqual(expected);
+      }
+    }
+  });
+});

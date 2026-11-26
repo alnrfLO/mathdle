@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { MessageState } from "../hooks/useMathdle";
 import "./lab.css";
+import "../components/HelpBar.css";
 
 export function LabShell({
   eyebrow,
@@ -11,6 +12,9 @@ export function LabShell({
   onCheck,
   onNext,
   checkLabel = "Valider",
+  hint,
+  onGiveUp,
+  round,
 }: {
   eyebrow: string;
   children: ReactNode;
@@ -20,12 +24,34 @@ export function LabShell({
   onCheck: () => void;
   onNext: () => void;
   checkLabel?: string;
+  hint?: string;
+  onGiveUp?: () => void;
+  round?: unknown;
 }) {
+  const [hintFor, setHintFor] = useState<unknown>(undefined);
+  const hintShown = hint !== undefined && hintFor === (round ?? hint);
   return (
     <div className="lab">
       <p className="lab__eyebrow">{eyebrow}</p>
       {children}
       <div className={"message" + (message.variant ? ` message--${message.variant}` : "")}>{message.text}</div>
+      {!done && (hint !== undefined || onGiveUp) && (
+        <div className="helpbar">
+          <div className="helpbar__actions">
+            {hint !== undefined && (
+              <button type="button" className="helpbar__btn" disabled={hintShown} onClick={() => setHintFor(round ?? hint)}>
+                Indice
+              </button>
+            )}
+            {onGiveUp && (
+              <button type="button" className="helpbar__btn helpbar__btn--ghost" onClick={onGiveUp}>
+                Voir la solution
+              </button>
+            )}
+          </div>
+          {hintShown && <p className="lab__hint">{hint}</p>}
+        </div>
+      )}
       <div className="science__actions">
         {done ? (
           <button type="button" className="science-btn science-btn--primary" onClick={onNext}>

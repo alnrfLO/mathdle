@@ -118,8 +118,18 @@ export function Suites({ level }: { level: Difficulty }) {
     } else setMsg(err(`Raté, ${hint}`));
   };
 
+  const giveUp = () => {
+    setMsg(err(`C'était ${fmt(suite.next, 8)} (${suite.nature} : ${suite.formule})`));
+    setDone(true);
+    recordResult("suites", false);
+  };
+  const suiteHint = suite.nature === "carrés" ? "Compare chaque terme à un carré parfait (1, 4, 9, 16…)" : `C'est une suite ${suite.nature}`;
+
   return (
     <LabShell
+      hint={suiteHint}
+      onGiveUp={giveUp}
+      round={suite}
       eyebrow={`SUITES (ESSAI ${Math.min(tries.length + 1, MAX)}/${MAX})`}
       message={msg}
       done={done}
