@@ -38,11 +38,16 @@ export function LegalNotice({ onClose }: LegalNoticeProps) {
 
         <h3>Crédits</h3>
         <p>Logo réalisé par <a href="https://portfolio-sylvain-belevindiran.vercel.app" target="_blank" rel="noopener noreferrer">Sylvain Belevindiran</a>.</p>
+        <p>
+          Le mode Console exécute Python dans ton navigateur grâce à{" "}
+          <a href="https://pyodide.org" target="_blank" rel="noopener noreferrer">Pyodide</a> (licence MPL 2.0), chargé depuis le CDN jsDelivr
+          à la première utilisation. Ton code ne quitte jamais ton appareil.
+        </p>
 
         <h3>Données personnelles</h3>
         <p>
           Ce site ne collecte aucune donnée personnelle et ne dépose aucun cookie de suivi. La
-          progression à l'énigme du jour (série de jours réussis) est stockée uniquement dans le
+          progression (énigme du jour, statistiques) est stockée uniquement dans le
           navigateur (localStorage), n'est jamais transmise à un serveur, et disparaît si tu vides
           les données de navigation du site.
         </p>

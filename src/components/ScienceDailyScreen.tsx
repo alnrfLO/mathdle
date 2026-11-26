@@ -2,6 +2,7 @@ import type { ConversionQuestion } from "../science/conversions";
 import type { MessageState } from "../hooks/useMathdle";
 import "./DailyScreen.css";
 import "./ScienceScreen.css";
+import { ShareButton, StoredShareButton } from "../lab/StatsModal";
 
 interface ScienceDailyScreenProps {
   question: ConversionQuestion;
@@ -20,13 +21,16 @@ export function ScienceDailyScreen({
   question,
   input,
   message,
+  attempts,
+  maxAttempts,
   gameOver,
   won,
   alreadyPlayedToday,
   dayStreak,
   lastWon,
 }: ScienceDailyScreenProps) {
-  if (alreadyPlayedToday) {
+  // gameOver : la partie vient de finir, on garde la grille et le bouton partager
+  if (alreadyPlayedToday && !gameOver) {
     return (
       <div className="daily">
         <p className="daily__eyebrow">ÉNIGME DU JOUR</p>
@@ -34,6 +38,7 @@ export function ScienceDailyScreen({
           {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui — perdu"}
         </p>
         <p className="daily__streak">Série de jours : {dayStreak} 🔥</p>
+        <StoredShareButton title="Sciences" />
         <p className="daily__comeback">Reviens demain pour la prochaine !</p>
       </div>
     );
@@ -64,6 +69,7 @@ export function ScienceDailyScreen({
           {won ? "Trouvé ! Reviens demain 🔥" : "Reviens demain pour la suivante"}
         </p>
       )}
+      {gameOver && <ShareButton title="Sciences" won={won} max={maxAttempts} extra={String(attempts)} />}
     </div>
   );
 }

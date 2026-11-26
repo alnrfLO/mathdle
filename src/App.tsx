@@ -33,9 +33,41 @@ import { LEVELS } from "./game/config";
 import { PROG_LANG_LABELS } from "./game/programming";
 import type { ProgLang, ProgLevel } from "./game/programming";
 import type { Subject } from "./game/types";
+import { Suites } from "./lab/Suites";
+import { CiblePi } from "./lab/CiblePi";
+import { Courbes } from "./lab/Courbes";
+import { ElementMystere, MasseMolaire, Redox } from "./lab/Chimie";
+import { Unites, Applications, Chaine } from "./lab/Physique";
+import { Console } from "./lab/Console";
+import { StatsModal } from "./lab/StatsModal";
+import "./lab/lab.css";
 import "./App.css";
 
 type ScienceGame = "conversions" | "chimie" | "formules";
+type MathExtra = "grille" | "suites" | "pi" | "courbes";
+type SciSub = "equilibrage" | "element" | "masse" | "redox" | "formules" | "conversions" | "unites" | "an" | "chaine";
+type LabLevel = "facile" | "moyen" | "difficile";
+
+const MATH_EXTRAS: { id: MathExtra; label: string }[] = [
+  { id: "grille", label: "Grille" },
+  { id: "suites", label: "Suites" },
+  { id: "pi", label: "Cible π" },
+  { id: "courbes", label: "Courbes" },
+];
+const CHIMIE_SUBS: { id: SciSub; label: string }[] = [
+  { id: "equilibrage", label: "Équilibrage" },
+  { id: "element", label: "Élément mystère" },
+  { id: "masse", label: "Masse molaire" },
+  { id: "redox", label: "Oxydoréduction" },
+];
+const PHYSIQUE_SUBS: { id: SciSub; label: string }[] = [
+  { id: "formules", label: "Formules" },
+  { id: "conversions", label: "Conversions" },
+  { id: "unites", label: "Unités" },
+  { id: "an", label: "Applications num." },
+  { id: "chaine", label: "Conversions en chaîne" },
+];
+const LEGACY_SCI: Partial<Record<SciSub, ScienceGame>> = { equilibrage: "chimie", formules: "formules", conversions: "conversions" };
 type ProgType = "blanche" | "trous";
 type PlayMode = "menu" | "serie" | "daily";
 
@@ -48,7 +80,15 @@ const SCIENCE_LEVELS = [
 function App() {
   const [subject, setSubjectState] = useState<Subject | "menu">("menu");
   const [playMode, setPlayMode] = useState<PlayMode>("menu");
-  const [scienceGame, setScienceGame] = useState<ScienceGame>("conversions");
+  const [sciSub, setSciSub] = useState<SciSub>("equilibrage");
+  const scienceGame: ScienceGame = LEGACY_SCI[sciSub] ?? "conversions";
+  const sciIsLab = !LEGACY_SCI[sciSub];
+  const sciFamily = CHIMIE_SUBS.some((c) => c.id === sciSub) ? "chimie" : "physique";
+  const [labLevel, setLabLevel] = useState<LabLevel>("facile");
+  const [mathExtra, setMathExtra] = useState<MathExtra>("grille");
+  const [showStats, setShowStats] = useState(false);
+  const [dailyHub, setDailyHub] = useState(false);
+  const [pendingProgDaily, setPendingProgDaily] = useState(false);
   const [scienceStreak, setScienceStreak] = useState(0);
   const [progLang, setProgLang] = useState<ProgLang | null>(null);
   const [progLevel, setProgLevel] = useState<ProgLevel>("facile");
@@ -89,8 +129,12 @@ function App() {
 
   const chooseLang = (lang: ProgLang) => {
     setProgLang(lang);
-    setPlayMode("menu");
+    setPlayMode(pendingProgDaily ? "daily" : "menu");
+    setPendingProgDaily(false);
   };
+  const progRunnable = progLang === "python" || progLang === "javascript";
+  const progEffective = progType === "blanche" && progRunnable ? "console" : progType;
+  const mathGrid = mathExtra === "grille";
 
   const isSymbolic = mathdle.level === "impossible";
   const levelCfg =
@@ -103,6 +147,9 @@ function App() {
 
   useEffect(() => {
     function handleKeydown(e: KeyboardEvent) {
+      // Les nouveaux modes ont leurs propres champs de saisie
+      if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
+      if (playMode === "serie" && ((subject === "math" && mathExtra !== "grille") || (subject === "science" && sciIsLab) || (subject === "prog" && progEffective === "console"))) return;
       if (playMode === "daily" && subject === "math") {
         if (e.key === "Backspace") {
           e.preventDefault();
@@ -197,13 +244,13 @@ function App() {
     }
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [subject, playMode, isSymbolic, mathdle, scienceGame, conversions, chemistry, physics, mathDaily, scienceDaily]);
+  }, [subject, playMode, isSymbolic, mathdle, scienceGame, conversions, chemistry, physics, mathDaily, scienceDaily, mathExtra, sciIsLab, progEffective]);
 
   return (
     <div className="scene">
       <div className="calculator">
         <div className="calculator__brandrow">
-          {subject === "menu" ? (
+          {subject === "menu" && !dailyHub ? (
             <span className="calculator__brand">
               <img src="/favicon.svg" alt="" width={14} height={14} className="calculator__brand-logo" />
               MATHDLE-92
@@ -213,6 +260,10 @@ function App() {
               type="button"
               className="calculator__menu-btn"
               onClick={() => {
+                if (subject === "menu") {
+                  setDailyHub(false);
+                  return;
+                }
                 if (playMode !== "menu") {
                   setPlayMode("menu");
                   return;
@@ -227,19 +278,19 @@ function App() {
               ← MENU
             </button>
           )}
-          {playMode === "serie" && subject === "math" && (
+          {playMode === "serie" && subject === "math" && mathGrid && (
             <span className="calculator__lives" aria-label={`${mathdle.lives} vies sur ${mathdle.maxLives}`}>
               {"♥".repeat(mathdle.lives)}
               {"♡".repeat(mathdle.maxLives - mathdle.lives)}
             </span>
           )}
-          {playMode === "serie" && subject === "science" && scienceGame === "chimie" && (
+          {playMode === "serie" && subject === "science" && sciSub === "equilibrage" && (
             <span className="calculator__lives" aria-label={`${chemistry.lives} vies sur ${chemistry.maxLives}`}>
               {"♥".repeat(chemistry.lives)}
               {"♡".repeat(chemistry.maxLives - chemistry.lives)}
             </span>
           )}
-          {playMode === "serie" && subject === "prog" && progType === "trous" && (
+          {playMode === "serie" && subject === "prog" && progEffective === "trous" && (
             <span className="calculator__lives" aria-label={`${progATrous.lives} vies sur ${progATrous.maxLives}`}>
               {"♥".repeat(progATrous.lives)}
               {"♡".repeat(progATrous.maxLives - progATrous.lives)}
@@ -269,16 +320,46 @@ function App() {
 
         <div className="calculator__screen-frame">
           <div className="calculator__screen">
-            {subject === "menu" && (
+            {subject === "menu" && !dailyHub && (
               <SubjectMenu
                 onChoose={setSubject}
-                onDaily={() => {
-                  setSubject("math");
-                  setPlayMode("daily");
-                }}
+                onDaily={() => setDailyHub(true)}
+                onStats={() => setShowStats(true)}
                 dailyDone={mathDaily.alreadyPlayedToday}
                 dayStreak={mathDaily.dayStreak}
               />
+            )}
+
+            {subject === "menu" && dailyHub && (
+              <div className="subject-menu daily-hub">
+                <p className="subject-menu__hint">ÉNIGMES DU JOUR · les mêmes pour tout le monde</p>
+                {[
+                  { id: "math" as const, title: "MATHS", done: mathDaily.alreadyPlayedToday, streak: mathDaily.dayStreak },
+                  { id: "science" as const, title: "SCIENCES", done: scienceDaily.alreadyPlayedToday, streak: scienceDaily.dayStreak },
+                  { id: "prog" as const, title: "CODE", done: false, streak: 0 },
+                ].map((d, i) => (
+                  <button
+                    key={d.id}
+                    type="button"
+                    className="subject-menu__item"
+                    onClick={() => {
+                      setDailyHub(false);
+                      setSubject(d.id);
+                      if (d.id === "prog") setPendingProgDaily(true);
+                      else setPlayMode("daily");
+                    }}
+                  >
+                    <span className="subject-menu__num">{i + 1}</span>
+                    <span className="subject-menu__text">
+                      <span className="subject-menu__title">{d.title}</span>
+                      <span className="subject-menu__desc">
+                        {d.id === "prog" ? "Choisis ton langage" : d.done ? "Terminée ✓" : "À faire"}
+                        {d.streak > 0 && ` · série ${d.streak} j`}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
             )}
 
             {subject === "prog" && !progLang && <LangMenu onChoose={chooseLang} />}
@@ -355,9 +436,22 @@ function App() {
             {subject === "math" && playMode === "serie" && (
               <>
                 <SoftkeyTabs level={mathdle.level} onChange={mathdle.setLevel} />
-                <ModeSwitch mode={mathdle.mode} disabled={isSymbolic} onChange={mathdle.setMode} />
+                <div className="sub-switch" role="tablist" aria-label="Type de jeu">
+                  {MATH_EXTRAS.map((m) => (
+                    <button key={m.id} type="button" className={mathExtra === m.id ? "is-active" : ""} onClick={() => setMathExtra(m.id)}>
+                      {m.label}
+                    </button>
+                  ))}
+                </div>
+                {mathGrid && <ModeSwitch mode={mathdle.mode} disabled={isSymbolic} onChange={mathdle.setMode} />}
 
-                {mathdle.mode === "classique" ? (
+                {mathExtra === "suites" ? (
+                  <Suites level={mathdle.level} />
+                ) : mathExtra === "pi" ? (
+                  <CiblePi level={mathdle.level} />
+                ) : mathExtra === "courbes" ? (
+                  <Courbes level={mathdle.level} />
+                ) : mathdle.mode === "classique" ? (
                   <div className="play-area">
                     {isSymbolic && mathdle.classique.nature && (
                       <p className="impossible-hint">
@@ -423,9 +517,9 @@ function App() {
                       type="button"
                       className={
                         "softkey" +
-                        (activeScience.level === t.id ? " softkey--active" : "")
+                        ((sciIsLab ? labLevel : activeScience.level) === t.id ? " softkey--active" : "")
                       }
-                      onClick={() => activeScience.setLevel(t.id)}
+                      onClick={() => (sciIsLab ? setLabLevel(t.id) : activeScience.setLevel(t.id))}
                     >
                       <span className="softkey__f">{t.f}</span>
                       <span className="softkey__label">{t.label}</span>
@@ -433,31 +527,38 @@ function App() {
                   ))}
                 </div>
 
-                <div className="mode-switch mode-switch--triple">
+                <div className="mode-switch">
                   <button
                     type="button"
-                    className={"mode-btn" + (scienceGame === "conversions" ? " mode-btn--active" : "")}
-                    onClick={() => setScienceGame("conversions")}
-                  >
-                    Conversions
-                  </button>
-                  <button
-                    type="button"
-                    className={"mode-btn" + (scienceGame === "chimie" ? " mode-btn--active" : "")}
-                    onClick={() => setScienceGame("chimie")}
+                    className={"mode-btn" + (sciFamily === "chimie" ? " mode-btn--active" : "")}
+                    onClick={() => setSciSub("equilibrage")}
                   >
                     Chimie
                   </button>
                   <button
                     type="button"
-                    className={"mode-btn" + (scienceGame === "formules" ? " mode-btn--active" : "")}
-                    onClick={() => setScienceGame("formules")}
+                    className={"mode-btn" + (sciFamily === "physique" ? " mode-btn--active" : "")}
+                    onClick={() => setSciSub("formules")}
                   >
-                    Formules
+                    Physique
                   </button>
                 </div>
+                <div className="sub-switch" aria-label="Exercice">
+                  {(sciFamily === "chimie" ? CHIMIE_SUBS : PHYSIQUE_SUBS).map((c) => (
+                    <button key={c.id} type="button" className={sciSub === c.id ? "is-active" : ""} onClick={() => setSciSub(c.id)}>
+                      {c.label}
+                    </button>
+                  ))}
+                </div>
 
-                {scienceGame === "conversions" && (
+                {sciSub === "element" && <ElementMystere level={labLevel} />}
+                {sciSub === "masse" && <MasseMolaire level={labLevel} />}
+                {sciSub === "redox" && <Redox level={labLevel} />}
+                {sciSub === "unites" && <Unites level={labLevel} />}
+                {sciSub === "an" && <Applications level={labLevel} />}
+                {sciSub === "chaine" && <Chaine level={labLevel} />}
+
+                {sciSub === "conversions" && (
                   <ScienceScreen
                     question={conversions.question}
                     input={conversions.input}
@@ -468,7 +569,7 @@ function App() {
                   />
                 )}
 
-                {scienceGame === "chimie" && (
+                {sciSub === "equilibrage" && (
                   <ChemistryScreen
                     equation={chemistry.equation}
                     coeffs={chemistry.coeffs}
@@ -481,7 +582,7 @@ function App() {
                   />
                 )}
 
-                {scienceGame === "formules" && (
+                {sciSub === "formules" && (
                   <PhysicsScreen
                     target={physics.target}
                     domaine={physics.domaine}
@@ -497,9 +598,11 @@ function App() {
                   />
                 )}
 
-                <div className="screen-only-info">
-                  <ScienceInfoPanel subject={scienceGame} />
-                </div>
+                {!sciIsLab && (
+                  <div className="screen-only-info">
+                    <ScienceInfoPanel subject={scienceGame} />
+                  </div>
+                )}
               </>
             )}
 
@@ -532,11 +635,15 @@ function App() {
                     className={"mode-btn" + (progType === "blanche" ? " mode-btn--active" : "")}
                     onClick={() => setProgType("blanche")}
                   >
-                    Page blanche
+                    {progRunnable ? "Console ▶" : "Page blanche"}
                   </button>
                 </div>
 
-                {progType === "blanche" && (
+                {progEffective === "console" && (
+                  <Console lang={progLang as "python" | "javascript"} level={progLevel} />
+                )}
+
+                {progEffective === "blanche" && (
                   <ProgScreen
                     titre={progPageBlanche.exercise.titre}
                     enonce={progPageBlanche.exercise.enonce}
@@ -577,7 +684,7 @@ function App() {
           </div>
         </div>
 
-        {subject === "math" && playMode === "serie" && (
+        {subject === "math" && playMode === "serie" && mathGrid && (
           <Keyboard
             opKeys={levelCfg.keys}
             extraKeys={mathdle.mode === "classique" ? levelCfg.extraKeys : undefined}
@@ -598,7 +705,7 @@ function App() {
           />
         )}
 
-        {subject === "science" && playMode === "serie" && scienceGame === "conversions" && (
+        {subject === "science" && playMode === "serie" && sciSub === "conversions" && (
           <Keyboard
             opKeys={[","]}
             onKey={conversions.typeChar}
@@ -608,7 +715,7 @@ function App() {
           />
         )}
 
-        {subject === "science" && playMode === "serie" && scienceGame === "chimie" && (
+        {subject === "science" && playMode === "serie" && sciSub === "equilibrage" && (
           <Keyboard
             opKeys={chemistry.twoDigits ? ["→"] : []}
             onKey={chemistry.typeChar}
@@ -618,7 +725,7 @@ function App() {
           />
         )}
 
-        {subject === "science" && playMode === "serie" && scienceGame === "formules" && (
+        {subject === "science" && playMode === "serie" && sciSub === "formules" && (
           <Keyboard
             opKeys={physics.keys}
             extraKeys={physics.extraKeys}
@@ -639,7 +746,7 @@ function App() {
           />
         )}
 
-        {subject === "prog" && playMode === "serie" && progType === "blanche" && (
+        {subject === "prog" && playMode === "serie" && progEffective === "blanche" && (
           <Keyboard
             opKeys={progPageBlanche.keys}
             extraKeys={progPageBlanche.extraKeys}
@@ -678,6 +785,7 @@ function App() {
       </div>
 
       {showLegal && <LegalNotice onClose={() => setShowLegal(false)} />}
+      {showStats && <StatsModal onClose={() => setShowStats(false)} />}
 
       {subject !== "menu" && (
         <aside className="desk-note">

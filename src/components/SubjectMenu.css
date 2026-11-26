@@ -140,3 +140,77 @@
   font-size: 0.66rem;
   opacity: 0.8;
 }
+
+/* v2 : accueil en 4 portes */
+.doors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.door {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  min-height: 104px;
+  background: var(--screen-bg-deep);
+  border: 1px solid rgba(41, 51, 31, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-mono);
+  color: var(--ink);
+  transition: background 0.12s ease, transform 0.08s ease;
+}
+
+.door:hover {
+  background: var(--screen-bg);
+}
+
+.door:active {
+  transform: scale(0.98);
+}
+
+.door__icon {
+  font-family: var(--font-screen);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.door__title {
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.door__desc {
+  font-size: 0.64rem;
+  color: var(--ink-dim);
+  line-height: 1.3;
+}
+
+.door--daily {
+  border-color: var(--state-present);
+  box-shadow: inset 0 0 0 1px var(--state-present);
+}
+
+.subject-menu__stats {
+  align-self: center;
+  background: transparent;
+  border: 1px dashed rgba(41, 51, 31, 0.45);
+  border-radius: 14px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.daily-hub {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 4px;
+}

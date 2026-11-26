@@ -4,17 +4,18 @@ import "./SubjectMenu.css";
 interface SubjectMenuProps {
   onChoose: (subject: Subject) => void;
   onDaily: () => void;
+  onStats: () => void;
   dailyDone: boolean;
   dayStreak: number;
 }
 
-const SUBJECTS: { id: Subject; num: string; title: string; desc: string }[] = [
-  { id: "math", num: "1", title: "MATHS", desc: "Équations, cible libre, Impossible" },
-  { id: "science", num: "2", title: "SCIENCES", desc: "Conversions, chimie, physique" },
-  { id: "prog", num: "3", title: "PROGRAMMATION", desc: "72 exos · JS, Python, Java, C++" },
+const DOORS: { id: Subject; icon: string; title: string; desc: string }[] = [
+  { id: "math", icon: "∑", title: "MATHS", desc: "Équations, cible π, suites, courbes" },
+  { id: "science", icon: "⚗", title: "SCIENCES", desc: "Chimie et physique" },
+  { id: "prog", icon: "</>", title: "PROGRAMMATION", desc: "Console Python / JS, extraits à trous" },
 ];
 
-export function SubjectMenu({ onChoose, onDaily, dailyDone, dayStreak }: SubjectMenuProps) {
+export function SubjectMenu({ onChoose, onDaily, onStats, dailyDone, dayStreak }: SubjectMenuProps) {
   return (
     <div className="subject-menu">
       <div className="subject-menu__hero">
@@ -31,26 +32,26 @@ export function SubjectMenu({ onChoose, onDaily, dailyDone, dayStreak }: Subject
         <span><i className="dot dot--absent" />absent</span>
       </div>
 
-      <button type="button" className="subject-menu__daily" onClick={onDaily}>
-        <span className="subject-menu__daily-title">
-          {dailyDone ? "Énigme du jour terminée ✓" : "Énigme du jour"}
-        </span>
-        <span className="subject-menu__daily-desc">
-          {dailyDone ? "Reviens demain pour la suivante" : "Maths · la même pour tout le monde"}
-          {dayStreak > 0 && ` · série ${dayStreak} j`}
-        </span>
-      </button>
-
-      <p className="subject-menu__hint">ou choisis une matière</p>
-      {SUBJECTS.map((s) => (
-        <button key={s.id} type="button" className="subject-menu__item" onClick={() => onChoose(s.id)}>
-          <span className="subject-menu__num">{s.num}</span>
-          <span className="subject-menu__text">
-            <span className="subject-menu__title">{s.title}</span>
-            <span className="subject-menu__desc">{s.desc}</span>
+      <div className="doors">
+        {DOORS.map((d) => (
+          <button key={d.id} type="button" className="door" onClick={() => onChoose(d.id)}>
+            <span className="door__icon">{d.icon}</span>
+            <span className="door__title">{d.title}</span>
+            <span className="door__desc">{d.desc}</span>
+          </button>
+        ))}
+        <button type="button" className="door door--daily" onClick={onDaily}>
+          <span className="door__icon">★</span>
+          <span className="door__title">ÉNIGME DU JOUR</span>
+          <span className="door__desc">
+            {dailyDone ? "Maths faite ✓ · " : ""}maths, sciences, code{dayStreak > 0 ? ` · série ${dayStreak} j` : ""}
           </span>
         </button>
-      ))}
+      </div>
+
+      <button type="button" className="subject-menu__stats" onClick={onStats}>
+        📊 Mes statistiques
+      </button>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { todayKey } from "../game/seededRandom";
+import { recordResult } from "../lab/stats";
 
 interface DailyRecord {
   streak: number;
@@ -34,9 +35,11 @@ export function useDailyProgress(storageKey: string) {
 
   const complete = useCallback(
     (won: boolean) => {
+      recordResult(`daily-${storageKey}`, won);
       setRecord((prev) => {
         const next: DailyRecord = {
-          streak: won ? prev.streak + 1 : 0,
+          // La série ne continue que si la veille a aussi été réussie
+          streak: won ? (prev.lastDate === todayKey(-1) && prev.lastWon ? prev.streak + 1 : 1) : 0,
           lastDate: today,
           lastWon: won,
         };
@@ -48,8 +51,10 @@ export function useDailyProgress(storageKey: string) {
         return next;
       });
     },
-    [key, today]
+    [key, today, storageKey]
   );
 
-  return { record, alreadyPlayedToday, complete, loaded };
+  // Une série qui date d'avant-hier est cassée : on affiche 0
+  const alive = record.lastWon && (record.lastDate === today || record.lastDate === todayKey(-1));
+  return { record: { ...record, streak: alive ? record.streak : 0 }, alreadyPlayedToday, complete, loaded };
 }

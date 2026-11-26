@@ -1,0 +1,243 @@
+/* Styles partagés des nouveaux modes (v2) */
+.lab {
+  padding: 6px 2px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lab__eyebrow {
+  text-align: center;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-dim);
+  margin: 0;
+}
+
+.lab__card {
+  background: var(--screen-bg-deep);
+  border: 1px solid rgba(41, 51, 31, 0.3);
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+}
+
+.lab__big {
+  font-family: var(--font-screen);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: var(--ink);
+  line-height: 1.15;
+  word-break: break-word;
+}
+
+.lab__small {
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+}
+
+.lab__input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(41, 51, 31, 0.4);
+  background: #e3ebdb;
+  color: var(--ink);
+}
+
+.lab__row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.lab__row > .lab__input {
+  flex: 1;
+}
+
+.lab__pad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+}
+
+.lab__pad button {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 5px 9px;
+  border-radius: 4px;
+  border: 1px solid rgba(41, 51, 31, 0.3);
+  background: var(--screen-bg);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.lab__history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.lab__history li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.lab__ok {
+  color: var(--state-correct);
+  font-weight: 700;
+}
+
+.lab__ko {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.lab__select {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(41, 51, 31, 0.4);
+  background: #e3ebdb;
+  color: var(--ink);
+}
+
+.lab__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+.lab__table th {
+  color: var(--ink-dim);
+  font-weight: 600;
+  padding: 2px;
+}
+
+.lab__table td {
+  padding: 4px 2px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.cell-ok {
+  background: var(--state-correct);
+  color: #fff;
+}
+
+.cell-near {
+  background: var(--state-present);
+  color: #fff;
+}
+
+.cell-no {
+  background: var(--state-absent);
+  color: #fff;
+}
+
+.lab__canvas {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 34 / 24;
+  display: block;
+  margin: 0 auto;
+  background: #e3ebdb;
+  border-radius: 4px;
+  border: 1px solid rgba(41, 51, 31, 0.3);
+}
+
+.lab__eq {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--ink);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  line-height: 2;
+}
+
+.lab__coef {
+  width: 2.4em;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 3px 2px;
+  border-radius: 3px;
+  border: 1px solid rgba(41, 51, 31, 0.5);
+  background: #e3ebdb;
+  color: var(--ink);
+}
+
+.code-editor {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 150px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(41, 51, 31, 0.4);
+  background: #1f232a;
+  color: #e7e9ec;
+  resize: vertical;
+  tab-size: 4;
+}
+
+.code-console {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  background: #171a1f;
+  color: #c9d6bd;
+  border-radius: 4px;
+  padding: 6px 8px;
+  max-height: 110px;
+  overflow: auto;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.sub-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin: 2px 0 6px;
+}
+
+.sub-switch button {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  padding: 4px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(41, 51, 31, 0.35);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.sub-switch button.is-active {
+  background: var(--ink);
+  color: var(--screen-bg);
+}
+
+.share-btn {
+  margin: 4px auto 0;
+  display: block;
+}

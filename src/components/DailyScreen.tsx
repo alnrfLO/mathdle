@@ -1,6 +1,7 @@
 import { Grid } from "./Grid";
 import type { GridRow, MessageState } from "../hooks/useMathdle";
 import "./DailyScreen.css";
+import { ShareButton, StoredShareButton } from "../lab/StatsModal";
 
 interface MathDailyScreenProps {
   kind: "math";
@@ -20,7 +21,8 @@ interface MathDailyScreenProps {
 export function DailyScreen(props: MathDailyScreenProps) {
   const { target, rows, currentGuess, rowIndex, maxAttempts, gameOver, won, message, alreadyPlayedToday, dayStreak, lastWon } = props;
 
-  if (alreadyPlayedToday) {
+  // gameOver : la partie vient de finir, on garde la grille et le bouton partager
+  if (alreadyPlayedToday && !gameOver) {
     return (
       <div className="daily">
         <p className="daily__eyebrow">ÉNIGME DU JOUR</p>
@@ -28,6 +30,7 @@ export function DailyScreen(props: MathDailyScreenProps) {
           {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui — perdu"}
         </p>
         <p className="daily__streak">Série de jours : {dayStreak} 🔥</p>
+        <StoredShareButton title="Maths" />
         <p className="daily__comeback">Reviens demain pour la prochaine !</p>
       </div>
     );
@@ -55,6 +58,7 @@ export function DailyScreen(props: MathDailyScreenProps) {
           {won ? "Trouvé ! Reviens demain 🔥" : "Perdu — reviens demain pour la suivante"}
         </p>
       )}
+      {gameOver && <ShareButton title="Maths" won={won} rows={rows} max={maxAttempts} />}
     </div>
   );
 }
