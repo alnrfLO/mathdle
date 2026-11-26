@@ -1,8 +1,9 @@
-import { Grid } from "./Grid";
+import { CodeGrid } from "../lab/CodeGrid";
 import type { GridRow, MessageState } from "../hooks/useMathdle";
 import "./PhysicsScreen.css";
 
 interface ProgScreenProps {
+  lang: string;
   titre: string;
   enonce: string;
   target: string[];
@@ -18,6 +19,7 @@ interface ProgScreenProps {
 }
 
 export function ProgScreen({
+  lang,
   titre,
   enonce,
   target,
@@ -43,16 +45,14 @@ export function ProgScreen({
         {message.text}
       </div>
 
-      <Grid
+      <CodeGrid
         target={target}
         rows={rows}
         currentGuess={currentGuess}
         rowIndex={rowIndex}
         maxAttempts={maxAttempts}
         gameOver={gameOver}
-        isSymbolic
-        shakeRow={null}
-        popRow={null}
+        lang={lang}
       />
 
       {gameOver && (

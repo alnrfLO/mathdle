@@ -67,3 +67,18 @@
   background: var(--key-clear);
   color: var(--key-text-light);
 }
+
+/* Mots longs (ex. valeurAbsolue, nombreDiviseurs) : la touche prend la
+   largeur du mot et la rangée passe sur deux lignes si besoin */
+.kb-row:has(.key--long) {
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.key--long {
+  flex: 0 1 auto;
+  max-width: none;
+  padding: 0 8px;
+  font-size: clamp(0.56rem, 1.7vw, 0.64rem);
+  white-space: nowrap;
+}

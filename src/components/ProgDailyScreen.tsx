@@ -1,4 +1,4 @@
-import { Grid } from "./Grid";
+import { CodeGrid } from "../lab/CodeGrid";
 import type { GridRow, MessageState } from "../hooks/useMathdle";
 import "./DailyScreen.css";
 import { ShareButton, StoredShareButton } from "../lab/StatsModal";
@@ -56,16 +56,14 @@ export function ProgDailyScreen({
       <div className={"message" + (message.variant ? ` message--${message.variant}` : "")}>
         {message.text}
       </div>
-      <Grid
+      <CodeGrid
         target={target}
         rows={rows}
         currentGuess={currentGuess}
         rowIndex={rowIndex}
         maxAttempts={maxAttempts}
         gameOver={gameOver}
-        isSymbolic
-        shakeRow={null}
-        popRow={null}
+        lang={langLabel.toLowerCase()}
       />
       {gameOver && (
         <p className={"daily__result" + (won ? " daily__result--won" : "")}>

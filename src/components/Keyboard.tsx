@@ -46,7 +46,7 @@ export function Keyboard({
       {extraKeys && extraKeys.length > 0 && (
         <div className="kb-row">
           {extraKeys.map((k) => (
-            <button key={k} type="button" className="key key--symbol" onClick={() => onKey(k)}>
+            <button key={k} type="button" className={"key key--symbol" + (k.length > 7 ? " key--long" : "")} onClick={() => onKey(k)}>
               {k}
             </button>
           ))}

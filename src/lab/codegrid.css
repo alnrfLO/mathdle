@@ -1,0 +1,99 @@
+.codegrid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+
+.codegrid__try {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.codegrid__num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-dim);
+  width: 12px;
+  padding-top: 6px;
+  text-align: right;
+}
+
+.codegrid__code {
+  flex: 1;
+  background: #1f232a;
+  border-radius: 5px;
+  padding: 7px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.codegrid__try--done .codegrid__code {
+  padding: 5px 7px;
+  gap: 2px;
+}
+
+.codegrid__line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+
+.ctok {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1;
+  min-width: 1.1em;
+  min-height: 1.5em;
+  padding: 3px 5px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #e7e9ec;
+  box-sizing: border-box;
+}
+
+.codegrid__try--done .ctok {
+  font-size: 0.66rem;
+  min-height: 1.4em;
+  padding: 2px 4px;
+}
+
+.ctok--tight {
+  margin-left: -3px;
+}
+
+.ctok--empty {
+  border: 1px dashed rgba(231, 233, 236, 0.28);
+  min-width: 1.8em;
+}
+
+.ctok--filled {
+  border: 1px solid rgba(231, 233, 236, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ctok--cursor {
+  border: 1px solid var(--state-present);
+  box-shadow: 0 0 0 1px var(--state-present);
+}
+
+.ctok--correct {
+  background: var(--state-correct);
+  color: #fff;
+}
+
+.ctok--present {
+  background: var(--state-present);
+  color: #fff;
+}
+
+.ctok--absent {
+  background: #4a4f57;
+  color: #c3c7cc;
+}

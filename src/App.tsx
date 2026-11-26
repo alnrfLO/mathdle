@@ -645,6 +645,7 @@ function App() {
 
                 {progEffective === "blanche" && (
                   <ProgScreen
+                    lang={progLang ?? "javascript"}
                     titre={progPageBlanche.exercise.titre}
                     enonce={progPageBlanche.exercise.enonce}
                     target={progPageBlanche.target}
