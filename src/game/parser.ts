@@ -1,6 +1,3 @@
-// Parser d'expressions mathématiques (+ - * / et parenthèses)
-// Porté depuis legacy-reference.html (fonctions tokenize, parseExpression, evaluate)
-
 import type { Token } from "./types";
 
 export function tokenize(str: string): Token[] {

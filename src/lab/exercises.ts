@@ -1,23 +1,16 @@
-// Exercices du mode Console, inspirés de la banque publique d'épreuves
-// pratiques de NSI (adaptés, pas recopiés). Chaque exercice a :
-// - une solution de référence en JS, qui calcule les résultats attendus ;
-// - des tests visibles (dont des cas limites) ;
-// - un générateur de tests cachés aléatoires, différents à chaque essai,
-//   pour qu'un résultat écrit « en dur » ne passe pas.
-
 import type { ProgLevel } from "../game/programming";
 
 export interface Exercise {
   id: string;
   level: ProgLevel;
-  py: string; // nom Python
-  js: string; // nom JS
+  py: string;
+  js: string;
   params: string[];
   enonce: string;
   ref: (...args: never[]) => unknown;
   visible: unknown[][];
   hidden: () => unknown[][];
-  banned?: string[]; // fonctions natives interdites
+  banned?: string[];
 }
 
 const ri = (a: number, b: number) => a + Math.floor(Math.random() * (b - a + 1));
@@ -203,7 +196,6 @@ export const STARTER = {
   javascript: (e: Exercise) => `function ${e.js}(${e.params.join(", ")}) {\n  // ${e.enonce}\n}\n`,
 };
 
-// Détecte un appel à une fonction native interdite (hors commentaires)
 export function bannedUsed(e: Exercise, code: string, lang: "python" | "javascript"): string | null {
   if (!e.banned) return null;
   const list = bannedFor(e, lang);

@@ -1,8 +1,3 @@
-// Petit générateur pseudo-aléatoire déterministe (mulberry32) pour que
-// l'énigme du jour soit la même pour tout le monde à une date donnée,
-// sans avoir à réécrire toute la logique de génération existante :
-// on substitue temporairement Math.random le temps de l'appel.
-
 function mulberry32(seed: number) {
   let a = seed;
   return function () {
@@ -24,8 +19,6 @@ export function withSeed<T>(seed: number, fn: () => T): T {
   }
 }
 
-// Un entier stable pour la date du jour, avec un "sel" pour que deux
-// énigmes différentes (maths / sciences) ne partagent pas la même graine.
 export function todaySeed(salt: number): number {
   const d = new Date();
   const dateNum = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();

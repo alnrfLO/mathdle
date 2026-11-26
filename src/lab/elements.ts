@@ -1,4 +1,3 @@
-// Éléments Z = 1 à 54 : [symbole, nom, groupe (1-18), période, masse molaire g/mol]
 export type El = { z: number; sym: string; nom: string; group: number; period: number; mass: number };
 
 const RAW: [string, string, number, number, number][] = [
@@ -35,7 +34,6 @@ export function findElement(raw: string): El | undefined {
   return ELEMENTS.find((e) => norm(e.nom) === norm(s));
 }
 
-// Masse molaire d'une formule : H2O, Ca(OH)2, CuSO4·5H2O, Al2(SO4)3
 export function molarMass(formula: string): number {
   const parts = formula.replace(/\s/g, "").split(/[·.*]/);
   let total = 0;

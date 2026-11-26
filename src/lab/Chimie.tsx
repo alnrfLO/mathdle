@@ -5,8 +5,6 @@ import { ELEMENTS, findElement, molarMass, type El } from "./elements";
 import { parseNumber, fmt } from "./expr";
 import { recordResult } from "./stats";
 
-/* ---------------- Élément mystère (Wordle du tableau périodique) ---------------- */
-
 const POOL: Record<Difficulty, number> = { facile: 18, moyen: 20, difficile: 36, impossible: 54 };
 const EL_MAX = 6;
 
@@ -94,8 +92,6 @@ export function ElementMystere({ level }: { level: Difficulty }) {
   );
 }
 
-/* ---------------- Masse molaire ---------------- */
-
 const FORMULAS: Record<Difficulty, string[]> = {
   facile: ["H2O", "CO2", "O2", "N2", "NaCl", "CH4", "HCl", "NH3"],
   moyen: ["C6H12O6", "H2SO4", "CaCO3", "NaOH", "C2H5OH", "HNO3", "KMnO4", "Fe2O3"],
@@ -132,7 +128,6 @@ export function MasseMolaire({ level }: { level: Difficulty }) {
     if (v === null) return setMsg(err("Tape un nombre en g/mol (ex. 18 ou 18,02)"));
     const t = tries + 1;
     setTries(t);
-    // Tolérance de 0,5 % : on accepte les masses arrondies du programme
     if (Math.abs(v - M) <= Math.max(0.3, M * 0.005)) {
       setMsg(ok(`Exact ! M(${f}) = ${fmt(M, 5)} g/mol`));
       setDone(true);
@@ -176,10 +171,6 @@ export function MasseMolaire({ level }: { level: Difficulty }) {
   );
 }
 
-/* ---------------- Oxydoréduction : compléter une demi-équation ---------------- */
-
-// Chaque terme : [coefficient, espèce]. Les coefficients à trouver sont ceux > 1
-// ou ceux des espèces H⁺, H₂O et e⁻.
 type Term = [number, string];
 interface Half {
   couple: string;

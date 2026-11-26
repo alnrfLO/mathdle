@@ -1,13 +1,6 @@
-// Met une suite de tokens en forme de vrai code : retours à la ligne et
-// indentation. Les exercices ne stockent que les tokens, donc on déduit la
-// structure :
-// - JS / Java / C++ : accolades et points-virgules (hors parenthèses de for).
-// - Python : les « : » de fin d'en-tête (def, if, for…) ouvrent un bloc ;
-//   un « return » ferme son bloc ; le dernier return revient au niveau 1.
-
 export interface CodeLine {
   indent: number;
-  idx: number[]; // indices des tokens de la ligne
+  idx: number[];
 }
 
 const PY_HEADERS = new Set(["def", "if", "elif", "else", "for", "while"]);
@@ -32,7 +25,6 @@ function layoutBraces(t: string[]): CodeLine[] {
     if (tok === "}") {
       flush(Math.max(0, indent - 1));
       cur.push(i);
-      // « } else { » reste sur la même ligne
       if (t[i + 1] !== "else" && t[i + 1] !== "while") flush(indent);
       return;
     }
@@ -47,7 +39,6 @@ function layoutBraces(t: string[]): CodeLine[] {
 }
 
 function layoutPython(t: string[]): CodeLine[] {
-  // 1. Découpage en instructions
   const stmts: { idx: number[]; header: boolean; kw: string }[] = [];
   let cur: number[] = [];
   let depth = 0;
@@ -57,8 +48,6 @@ function layoutPython(t: string[]): CodeLine[] {
   };
   t.forEach((tok, i) => {
     const prev = t[i - 1];
-    // Une nouvelle instruction commence : mot-clé, ou « nom = » après une
-    // instruction finie (le token précédent n'est pas un opérateur)
     const startsStmt =
       depth === 0 &&
       cur.length > 0 &&
@@ -72,14 +61,12 @@ function layoutPython(t: string[]): CodeLine[] {
   });
   push(false);
 
-  // 2. Indentation
   const lines: CodeLine[] = [];
-  const stack: number[] = []; // niveaux des en-têtes ouverts
+  const stack: number[] = [];
   let level = 0;
   const lastReturn = stmts.map((s) => s.kw).lastIndexOf("return");
   stmts.forEach((s, k) => {
     if (s.kw === "elif" || s.kw === "else") {
-      // revient au niveau du if correspondant
       while (stack.length && stack[stack.length - 1] >= level) stack.pop();
       level = Math.max(0, level - 1);
     }

@@ -1,6 +1,3 @@
-// Génération d'équations aléatoires valides par niveau de difficulté
-// Porté depuis legacy-reference.html (randInt, generateEquation)
-
 import type { Difficulty } from "./types";
 
 export function randInt(min: number, max: number): number {

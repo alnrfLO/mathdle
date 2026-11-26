@@ -29,11 +29,8 @@ export function useProgPageBlanche(lang: ProgLang, level: ProgLevel, onCorrect: 
     setMessage(EMPTY_MESSAGE);
   }, []);
 
-  // Langage et niveau sont partagés avec le mode "à trous" (gérés par
-  // l'appelant) : on régénère un exercice frais dès que l'un des deux change.
   useEffect(() => {
     newExercise(lang, level);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, level]);
 
   const typeChar = useCallback(

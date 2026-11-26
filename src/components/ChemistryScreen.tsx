@@ -15,9 +15,6 @@ interface ChemistryScreenProps {
   onCheck: () => void;
 }
 
-// Découpe une formule ("Ca(OH)2", "Al2(SO4)3") pour passer ses chiffres en
-// indice, sans changer la police (contrairement à des caractères unicode
-// ₀₋₉, ça reste dans la même fonte que le reste de l'écran LCD).
 function renderFormula(formula: string): ReactNode {
   return formula.split(/([0-9]+)/).map((part, i) => (/^[0-9]+$/.test(part) ? <sub key={i}>{part}</sub> : part));
 }

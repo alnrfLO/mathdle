@@ -1,8 +1,3 @@
-// Exécution du code du joueur dans un Web Worker (jamais sur le thread
-// principal), avec délai maximum. JavaScript tourne directement dans le
-// worker ; Python passe par Pyodide (CPython compilé en WebAssembly),
-// chargé depuis un CDN à la première utilisation puis gardé en mémoire.
-
 export interface RunRequest {
   lang: "python" | "javascript";
   code: string;
@@ -12,7 +7,7 @@ export interface RunRequest {
 }
 
 export interface RunResult {
-  fatal?: string; // erreur globale (syntaxe, fonction absente, délai dépassé…)
+  fatal?: string;
   results?: { ok: boolean; v?: unknown; e?: string }[];
   logs: string[];
 }
@@ -174,7 +169,7 @@ export async function runCode(req: RunRequest, onStatus?: (s: string) => void): 
   return new Promise((resolve) => {
     const timer = setTimeout(() => {
       worker.terminate();
-      if (req.lang === "python") pyWorker = null; // il faudra recharger Python
+      if (req.lang === "python") pyWorker = null;
       resolve({ fatal: `Délai dépassé (${TIMEOUT_MS / 1000} s) : boucle infinie ?`, logs: [] });
     }, TIMEOUT_MS);
     worker.onmessage = (ev) => {
@@ -192,7 +187,6 @@ export async function runCode(req: RunRequest, onStatus?: (s: string) => void): 
   });
 }
 
-// Comparaison tolérante (flottants, listes, booléens)
 export function deepEqual(a: unknown, b: unknown): boolean {
   if (typeof a === "number" && typeof b === "number") return Math.abs(a - b) <= 1e-9 * Math.max(1, Math.abs(b));
   if (Array.isArray(a) && Array.isArray(b)) return a.length === b.length && a.every((x, i) => deepEqual(x, b[i]));

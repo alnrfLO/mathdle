@@ -6,12 +6,10 @@ import { recordResult } from "./stats";
 
 const relOk = (v: number, target: number, tol = 0.02) => Math.abs(v - target) <= tol * Math.abs(target) + 1e-12;
 
-/* ---------------- Trouver l'unité ---------------- */
-
 interface UnitQ {
   q: string;
-  answer: string; // affichage
-  accept: string[]; // formes acceptées (minuscule, sans espaces)
+  answer: string;
+  accept: string[];
 }
 
 const UNITS: Record<Difficulty, UnitQ[]> = {
@@ -120,8 +118,6 @@ export function Unites({ level }: { level: Difficulty }) {
   );
 }
 
-/* ---------------- Applications numériques (valeur + unité) ---------------- */
-
 interface AN {
   text: string;
   value: number;
@@ -227,7 +223,6 @@ export function Applications({ level }: { level: Difficulty }) {
     if (!unit) return setMsg(err("Choisis l'unité"));
     const t = tries + 1;
     setTries(t);
-    // On accepte aussi une conversion juste (km/h <-> m/s)
     let target = p.value;
     if (p.unit === "km/h" && unit === "m/s") target = p.value / 3.6;
     const unitOk = unit === p.unit || (p.unit === "km/h" && unit === "m/s");
@@ -271,8 +266,6 @@ export function Applications({ level }: { level: Difficulty }) {
     </LabShell>
   );
 }
-
-/* ---------------- Conversions en chaîne ---------------- */
 
 interface Chain {
   from: string;

@@ -36,11 +36,8 @@ export function useProgATrous(lang: ProgLang, level: ProgLevel, onCorrect: () =>
     setGameOver(false);
   }, []);
 
-  // Langage et niveau sont partagés avec le mode "page blanche" (gérés par
-  // l'appelant) : on régénère un exercice frais dès que l'un des deux change.
   useEffect(() => {
     newExercise(lang, level);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang, level]);
 
   const selectSlot = useCallback(
@@ -59,7 +56,6 @@ export function useProgATrous(lang: ProgLang, level: ProgLevel, onCorrect: () =>
         next[activeIndex] = token;
         return next;
       });
-      // avance au prochain trou vide
       const idx = blanks.indexOf(activeIndex);
       const nextBlank = blanks.slice(idx + 1).find((i) => answers[i] === null);
       if (nextBlank !== undefined) setActiveIndex(nextBlank);
@@ -104,8 +100,6 @@ export function useProgATrous(lang: ProgLang, level: ProgLevel, onCorrect: () =>
       return;
     }
 
-    // Plus d'essais : ça coûte une vie, on affiche la solution et on
-    // attend un clic manuel pour continuer (pas de relance auto).
     const solution = exercise.tokens.join(" ");
     const remainingLives = lives - 1;
     if (remainingLives <= 0) {

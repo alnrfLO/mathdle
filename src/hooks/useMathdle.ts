@@ -33,7 +33,6 @@ export function useMathdle() {
   const [lives, setLives] = useState(MAX_LIVES);
   const [streakJustReset, setStreakJustReset] = useState(false);
 
-  // --- Mode Classique ---
   const [target, setTarget] = useState<string[]>(() => freshClassiqueTarget("facile").tokens);
   const [impossibleNature, setImpossibleNature] = useState<string | null>(null);
   const [rows, setRows] = useState<GridRow[]>([]);
@@ -46,7 +45,6 @@ export function useMathdle() {
   const [shakeRow, setShakeRow] = useState<number | null>(null);
   const [popRow, setPopRow] = useState<number | null>(null);
 
-  // --- Mode Cible libre ---
   const [cibleTarget, setCibleTarget] = useState(0);
   const [cibleInput, setCibleInput] = useState("");
   const [cibleMessage, setCibleMessage] = useState<MessageState>(EMPTY_MESSAGE);
@@ -72,17 +70,14 @@ export function useMathdle() {
     setCibleMessage(EMPTY_MESSAGE);
   }, []);
 
-  // Démarre une partie classique au montage
   useEffect(() => {
     startClassique("facile");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setLevel = useCallback(
     (lvl: Difficulty) => {
       setLevelState(lvl);
       if (lvl === "impossible") {
-        // Pas de mode Cible libre pour ce niveau : on force Classique
         setModeState("classique");
         startClassique(lvl);
         return;
@@ -113,7 +108,6 @@ export function useMathdle() {
 
   const triggerShake = useCallback((row: number) => {
     setShakeRow(row);
-    // reset pour permettre de rejouer l'animation sur la même ligne
     window.setTimeout(() => setShakeRow((r) => (r === row ? null : r)), 360);
   }, []);
 

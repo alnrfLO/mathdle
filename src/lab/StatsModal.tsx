@@ -74,20 +74,17 @@ export function ShareButton({ title, won, rows, max, extra }: { title: string; w
     try {
       localStorage.setItem(shareKey(title), JSON.stringify({ day: todayKey(), text }));
     } catch {
-      // pas de stockage : le bouton marche quand même tant que la page est ouverte
     }
   }, [title, text]);
   return <ShareTextButton text={text} />;
 }
 
-// Après un rechargement : on repartage le résultat du jour s'il a été gardé
 export function StoredShareButton({ title }: { title: string }) {
   try {
     const raw = localStorage.getItem(shareKey(title));
     const saved = raw ? JSON.parse(raw) : null;
     if (saved?.day === todayKey()) return <ShareTextButton text={saved.text} />;
   } catch {
-    // ignore
   }
   return null;
 }

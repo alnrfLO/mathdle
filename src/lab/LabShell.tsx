@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import type { MessageState } from "../hooks/useMathdle";
 import "./lab.css";
 
-// Squelette commun : titre, message, boutons Passer / Valider / Suivant.
 export function LabShell({
   eyebrow,
   children,

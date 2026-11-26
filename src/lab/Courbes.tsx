@@ -4,11 +4,8 @@ import { LabShell, NO_MSG, err, ok, pick, randInt } from "./LabShell";
 import { compile, ExprError } from "./expr";
 import { recordResult } from "./stats";
 
-// Devine la fonction à partir de sa courbe. La comparaison se fait sur
-// de nombreux points : les écritures équivalentes sont donc acceptées.
-
 interface Target {
-  src: string; // expression (affichée à la fin)
+  src: string;
   fn: (x: number) => number;
 }
 

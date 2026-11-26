@@ -40,7 +40,6 @@
   color: var(--ink);
 }
 
-/* Sur le desk-note (desktop), toujours affiché, plus besoin du bouton */
 .desk-note .info-toggle {
   display: none;
 }

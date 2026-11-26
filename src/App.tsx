@@ -100,7 +100,6 @@ function App() {
   const onProgCorrect = () => setProgStreak((s) => s + 1);
   const onProgStreakReset = () => setProgStreak(0);
 
-  // Choisir une matière repart toujours sur le choix Série/Énigme du jour
   const setSubject = (s: Subject | "menu") => {
     setSubjectState(s);
     setPlayMode("menu");
@@ -147,7 +146,6 @@ function App() {
 
   useEffect(() => {
     function handleKeydown(e: KeyboardEvent) {
-      // Les nouveaux modes ont leurs propres champs de saisie
       if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
       if (playMode === "serie" && ((subject === "math" && mathExtra !== "grille") || (subject === "science" && sciIsLab) || (subject === "prog" && progEffective === "console"))) return;
       if (playMode === "daily" && subject === "math") {

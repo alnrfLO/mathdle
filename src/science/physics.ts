@@ -1,10 +1,3 @@
-// Banque de formules physiques (mécanique façon "Impossible" : comparaison
-// des tokens par position, pas de vérification symbolique réelle — ce n'est
-// pas possible ici comme pour la chimie, donc assumé comme un mini quiz).
-//
-// Chaque formule porte aussi son "domaine" (Mécanique / Énergie / Électricité /
-// Ondes / Gravitation / Pression), affiché comme indice avant de jouer.
-
 export interface PhysicsFormula {
   tokens: string[];
   domaine: string;
@@ -12,8 +5,8 @@ export interface PhysicsFormula {
 
 export interface PhysicsLevelConfig {
   maxAttempts: number;
-  keys: string[]; // touches "opérateur" (symboles courants)
-  extraKeys: string[]; // touches "2nd" (lettres/grandeurs)
+  keys: string[];
+  extraKeys: string[];
   bank: PhysicsFormula[];
 }
 

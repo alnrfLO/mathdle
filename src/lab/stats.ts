@@ -1,7 +1,3 @@
-// Statistiques locales (stockage navigateur, pas de back-end).
-// Une entrée par mode de jeu : parties jouées, gagnées, série en cours
-// et meilleure série.
-
 export interface ModeStats {
   played: number;
   won: number;
@@ -51,7 +47,6 @@ export function recordResult(mode: string, won: boolean) {
   try {
     localStorage.setItem(KEY, JSON.stringify(all));
   } catch {
-    // stockage indisponible : on ignore
   }
 }
 
@@ -67,7 +62,6 @@ export function totals(all = loadStats()) {
   return { played, won, best, pct: played ? Math.round((won / played) * 100) : 0 };
 }
 
-// Partage : Web Share API sur mobile, sinon copie dans le presse-papiers.
 export async function shareText(text: string): Promise<"shared" | "copied" | "failed"> {
   try {
     if (navigator.share) {
@@ -75,7 +69,6 @@ export async function shareText(text: string): Promise<"shared" | "copied" | "fa
       return "shared";
     }
   } catch {
-    // partage annulé ou refusé : on tente la copie
   }
   try {
     await navigator.clipboard.writeText(text);

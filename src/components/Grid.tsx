@@ -27,9 +27,6 @@ export function Grid({
   popRow,
 }: GridProps) {
   const len = target.length;
-  // On ne montre que les lignes déjà jouées + la ligne active (pas toutes
-  // les tentatives possibles d'un coup) ; en fin de partie, pas de ligne
-  // vide en trop après la dernière tentative jouée.
   const visibleRows = gameOver ? rowIndex : Math.min(rowIndex + 1, maxAttempts);
 
   return (

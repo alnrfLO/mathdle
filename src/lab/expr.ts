@@ -1,9 +1,3 @@
-// Petit évaluateur d'expressions mathématiques, sans eval().
-// Gère : nombres (virgule ou point), x, π / pi, e, + - * / ^, moins unaire,
-// parenthèses, multiplication implicite (2x, 3π, 2(x+1), x(x-1)) et les
-// fonctions sin cos tan exp ln log sqrt √ abs.
-// compile() renvoie une fonction (x) => number, ou lève une erreur lisible.
-
 type Tok =
   | { t: "num"; v: number }
   | { t: "x" }
@@ -58,7 +52,6 @@ function tokenize(src: string): Tok[] {
       let j = i;
       while (j < s.length && /[a-z]/.test(s[j])) j++;
       let word = s.slice(i, j);
-      // On découpe les mots collés du type "xsin" ou "pix"
       while (word.length > 0) {
         const fn = Object.keys(FUNCS).find((f) => word.startsWith(f));
         if (fn) {
@@ -97,7 +90,6 @@ function tokenize(src: string): Tok[] {
     }
     throw new ExprError(`caractère interdit « ${c} »`);
   }
-  // Multiplication implicite : entre (num|x|rp) et (num|x|lp|fn)
   const res: Tok[] = [];
   for (let k = 0; k < out.length; k++) {
     const a = out[k - 1];
@@ -205,7 +197,7 @@ function evalNode(n: Node, x: number): number {
 export interface Compiled {
   fn: (x: number) => number;
   usesX: boolean;
-  ops: number; // nombre d'opérations (+ - * / ^ et fonctions)
+  ops: number;
 }
 
 export function compile(src: string): Compiled {
@@ -217,8 +209,6 @@ export function compile(src: string): Compiled {
   return { fn: (x: number) => evalNode(tree, x), usesX, ops };
 }
 
-// Lecture souple d'un nombre tapé par un joueur : "1,5", "1.5e-3",
-// "1,5×10^-3", "1,5 x 10^3", "-2".
 export function parseNumber(raw: string): number | null {
   const s = raw
     .trim()
@@ -235,7 +225,6 @@ export function closeEnough(a: number, b: number, rel = 1e-6): boolean {
   return Math.abs(a - b) <= rel * Math.max(1, Math.abs(a), Math.abs(b));
 }
 
-// Affichage compact d'un nombre à la française
 export function fmt(n: number, digits = 4): string {
   const r = Number(n.toPrecision(digits));
   return String(r).replace(".", ",");

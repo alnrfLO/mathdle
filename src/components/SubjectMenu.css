@@ -141,7 +141,6 @@
   opacity: 0.8;
 }
 
-/* v2 : accueil en 4 portes */
 .doors {
   display: grid;
   grid-template-columns: 1fr 1fr;

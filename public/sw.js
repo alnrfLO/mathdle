@@ -1,6 +1,3 @@
-// Service worker minimal : le site marche hors ligne après une première visite.
-// Pages : réseau d'abord (pour avoir la dernière version), cache en secours.
-// Fichiers statiques (JS, CSS, polices, images) : cache d'abord.
 const CACHE = "mathdle-v2";
 
 self.addEventListener("install", (e) => {
@@ -18,7 +15,7 @@ self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
-  if (url.origin !== location.origin) return; // Pyodide (CDN) : géré par le navigateur
+  if (url.origin !== location.origin) return;
 
   if (req.mode === "navigate") {
     e.respondWith(

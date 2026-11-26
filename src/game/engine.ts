@@ -1,6 +1,3 @@
-// Moteur de jeu : vérification d'équations/expressions et comparaison façon Wordle
-// Porté depuis legacy-reference.html (checkEquation, checkExpression, compareGuess)
-
 import { evaluate } from "./parser";
 import type { CellState, EquationCheckResult, ExpressionCheckResult } from "./types";
 
@@ -27,10 +24,6 @@ export function checkExpression(str: string): ExpressionCheckResult {
   }
 }
 
-// guess/target sont des tableaux de "tokens" : un caractère pour les niveaux
-// facile/moyen/difficile, un token multi-caractères ("lim", "d/dx"...) pour
-// le niveau impossible. La comparaison position par position fonctionne à
-// l'identique dans les deux cas.
 export function compareGuess(guess: string[], target: string[]): CellState[] {
   const n = target.length;
   const result: CellState[] = new Array(n).fill("absent");

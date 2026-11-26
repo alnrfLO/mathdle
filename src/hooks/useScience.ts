@@ -20,7 +20,6 @@ export function useScience(onCorrect: () => void) {
 
   useEffect(() => {
     newQuestion(level);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeLevel = useCallback(
@@ -53,8 +52,6 @@ export function useScience(onCorrect: () => void) {
     window.setTimeout(() => newQuestion(level), 1000);
   }, [input, question, level, newQuestion, onCorrect]);
 
-  // Passer une question ne coûte ni ne rapporte rien : c'est juste une
-  // question à choix unique, pas un mode à tentatives limitées.
   const skip = useCallback(() => newQuestion(level), [level, newQuestion]);
 
   return {

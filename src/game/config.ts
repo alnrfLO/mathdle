@@ -1,6 +1,3 @@
-// Config des niveaux (mode Classique) et des contraintes du mode Cible libre
-// Porté depuis legacy-reference.html (LEVELS, CIBLE_LEVELS)
-
 import type { Difficulty, LevelConfig } from "./types";
 
 export const LEVELS: Record<Difficulty, LevelConfig & { extraKeys?: string[] }> = {

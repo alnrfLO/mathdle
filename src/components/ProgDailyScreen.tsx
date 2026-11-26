@@ -34,7 +34,6 @@ export function ProgDailyScreen({
   dayStreak,
   lastWon,
 }: ProgDailyScreenProps) {
-  // gameOver : la partie vient de finir, on garde la grille et le bouton partager
   if (alreadyPlayedToday && !gameOver) {
     return (
       <div className="daily">

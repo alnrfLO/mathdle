@@ -9,8 +9,6 @@ import type { GridRow, MessageState } from "./useMathdle";
 
 const EMPTY_MESSAGE: MessageState = { text: "", variant: "" };
 const DAILY_LEVEL = "moyen" as const;
-// Un sel différent par langage pour que les 4 énigmes du jour ne soient pas
-// forcément la même variante d'exercice.
 const LANG_SALT: Record<ProgLang, number> = { javascript: 10, python: 11, java: 12, cpp: 13 };
 
 export function useProgDaily(lang: ProgLang) {

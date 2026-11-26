@@ -4,20 +4,17 @@
 @import "@fontsource/vt323/400.css";
 
 :root {
-  /* Coque de la calculatrice */
   --case: #2c313a;
   --case-deep: #1f232a;
   --case-trim: #454c58;
   --case-seam: #171a1f;
 
-  /* Écran LCD couleur */
   --screen-bg: #c9d6bd;
   --screen-bg-deep: #b7c6a8;
   --screen-glare: rgba(255, 255, 255, 0.06);
   --ink: #29331f;
   --ink-dim: #5c6b4c;
 
-  /* Touches */
   --key-num: #e7e9ec;
   --key-num-text: #262b31;
   --key-op: #6f9bd6;
@@ -26,13 +23,11 @@
   --key-clear: #d9705a;
   --key-text-light: #fbfbf9;
 
-  /* Feedback du jeu (pixels de l'écran) */
   --state-correct: #4f8f52;
   --state-present: #c98a2e;
   --state-absent: #90a082;
   --danger: #b8503c;
 
-  /* Scène (bureau) */
   --desk-bg: #1a1510;
   --paper-bg: #f2ecdb;
   --paper-ink: #2b2620;

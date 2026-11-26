@@ -9,7 +9,6 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
-// PWA : installable sur l'écran d'accueil (iPhone : Partager > Sur l'écran d'accueil)
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/sw.js").catch(() => {});

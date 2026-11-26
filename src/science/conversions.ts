@@ -1,7 +1,3 @@
-// Génération et vérification de questions de conversion d'unités.
-// Contrairement au mode Impossible (banque figée), ici la bonne réponse
-// est réellement calculée, donc n'importe quelle valeur générée est vérifiable.
-
 import { randInt } from "../game/generator";
 import type { Difficulty } from "../game/types";
 
@@ -10,19 +6,17 @@ export interface ConversionQuestion {
   fromUnit: string;
   toUnit: string;
   answer: number;
-  // Nombre de décimales attendues dans la réponse (0 = entier)
   decimals: number;
 }
 
 interface ConversionFamily {
   from: string;
   to: string;
-  factor: number; // valeur convertie = value * factor
+  factor: number;
   decimals: number;
   genValue: () => number;
 }
 
-// Niveau Facile : conversions "à x10/x100/x1000/x60", résultats toujours entiers
 const EASY_FAMILIES: ConversionFamily[] = [
   { from: "m", to: "cm", factor: 100, decimals: 0, genValue: () => randInt(1, 20) },
   { from: "cm", to: "m", factor: 0.01, decimals: 0, genValue: () => randInt(1, 20) * 100 },
@@ -38,7 +32,6 @@ const EASY_FAMILIES: ConversionFamily[] = [
   { from: "s", to: "min", factor: 1 / 60, decimals: 0, genValue: () => randInt(1, 10) * 60 },
 ];
 
-// Niveau Moyen : vitesses (km/h <-> m/s), résultats à 1 décimale
 const MEDIUM_FAMILIES: ConversionFamily[] = [
   { from: "km/h", to: "m/s", factor: 1 / 3.6, decimals: 1, genValue: () => randInt(10, 150) },
   { from: "m/s", to: "km/h", factor: 3.6, decimals: 1, genValue: () => randInt(1, 60) },
@@ -46,14 +39,12 @@ const MEDIUM_FAMILIES: ConversionFamily[] = [
   { from: "mg", to: "g", factor: 0.001, decimals: 0, genValue: () => randInt(1, 20) * 1000 },
 ];
 
-// Niveau Difficile : conversions chaînées / moins rondes, 1 à 2 décimales
 const HARD_FAMILIES: ConversionFamily[] = [
   { from: "km/h", to: "m/s", factor: 1 / 3.6, decimals: 2, genValue: () => randInt(7, 340) },
   { from: "m/s", to: "km/h", factor: 3.6, decimals: 1, genValue: () => randInt(1, 90) },
   { from: "km", to: "cm", factor: 100000, decimals: 0, genValue: () => randInt(1, 5) },
-  { from: "mL", to: "km", factor: 0, decimals: 0, genValue: () => 0 }, // placeholder retiré ci-dessous
+  { from: "mL", to: "km", factor: 0, decimals: 0, genValue: () => 0 },
 ];
-// On retire l'entrée absurde ci-dessus (mL -> km n'a pas de sens physique)
 HARD_FAMILIES.pop();
 HARD_FAMILIES.push(
   { from: "h", to: "s", factor: 3600, decimals: 0, genValue: () => randInt(1, 5) },

@@ -5,8 +5,8 @@ import { parseNumber, closeEnough, fmt } from "./expr";
 import { recordResult } from "./stats";
 
 interface Suite {
-  terms: number[]; // termes affichés u0..u4
-  next: number; // u5 à trouver
+  terms: number[];
+  next: number;
   nature: string;
   formule: string;
 }

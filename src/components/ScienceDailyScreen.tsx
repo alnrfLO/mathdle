@@ -29,7 +29,6 @@ export function ScienceDailyScreen({
   dayStreak,
   lastWon,
 }: ScienceDailyScreenProps) {
-  // gameOver : la partie vient de finir, on garde la grille et le bouton partager
   if (alreadyPlayedToday && !gameOver) {
     return (
       <div className="daily">

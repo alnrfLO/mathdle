@@ -4,10 +4,6 @@ import { LabShell, NO_MSG, err, ok, pick, randInt } from "./LabShell";
 import { compile, ExprError, closeEnough } from "./expr";
 import { recordResult } from "./stats";
 
-// Cible libre avec π : on vise une valeur du type pπ/q et le joueur
-// construit une expression qui tombe dessus (comparaison numérique,
-// donc 5π/10 et π/2 sont acceptés tous les deux).
-
 interface Target {
   p: number;
   q: number;

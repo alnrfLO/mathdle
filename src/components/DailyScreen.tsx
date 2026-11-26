@@ -21,7 +21,6 @@ interface MathDailyScreenProps {
 export function DailyScreen(props: MathDailyScreenProps) {
   const { target, rows, currentGuess, rowIndex, maxAttempts, gameOver, won, message, alreadyPlayedToday, dayStreak, lastWon } = props;
 
-  // gameOver : la partie vient de finir, on garde la grille et le bouton partager
   if (alreadyPlayedToday && !gameOver) {
     return (
       <div className="daily">

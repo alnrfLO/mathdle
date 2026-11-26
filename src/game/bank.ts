@@ -1,11 +1,3 @@
-// Banque d'équations symboliques pré-écrites pour le niveau "impossible"
-// (limites, intégrales, dérivées). Comparaison par position uniquement,
-// pas de vérification symbolique réelle.
-//
-// Chaque entrée porte aussi sa "nature" (limite / dérivée / intégrale /
-// racine carrée), affichée comme indice avant de jouer pour donner un
-// point de départ sans révéler la réponse.
-
 import { randInt } from "./generator";
 
 export interface ImpossibleTarget {
@@ -14,7 +6,6 @@ export interface ImpossibleTarget {
 }
 
 const IMPOSSIBLE_BANK: ImpossibleTarget[] = [
-  // --- Limites ---
   { tokens: ["lim", "(", "x", "→", "0", ")", "x", "/", "x", "=", "1"], nature: "Limite" },
   { tokens: ["lim", "(", "x", "→", "∞", ")", "1", "/", "x", "=", "0"], nature: "Limite" },
   { tokens: ["lim", "(", "x", "→", "2", ")", "x²", "=", "4"], nature: "Limite" },
@@ -36,7 +27,6 @@ const IMPOSSIBLE_BANK: ImpossibleTarget[] = [
   { tokens: ["lim", "(", "x", "→", "8", ")", "x", "/", "4", "=", "2"], nature: "Limite" },
   { tokens: ["lim", "(", "x", "→", "6", ")", "x", "+", "4", "=", "1", "0"], nature: "Limite" },
 
-  // --- Dérivées ---
   { tokens: ["d/dx", "(", "x²", ")", "=", "2x"], nature: "Dérivée" },
   { tokens: ["d/dx", "(", "x", ")", "=", "1"], nature: "Dérivée" },
   { tokens: ["d/dx", "(", "2x", ")", "=", "2"], nature: "Dérivée" },
@@ -58,7 +48,6 @@ const IMPOSSIBLE_BANK: ImpossibleTarget[] = [
   { tokens: ["d/dx", "(", "5", "x²", ")", "=", "1", "0", "x"], nature: "Dérivée" },
   { tokens: ["d/dx", "(", "x²", "+", "x", ")", "=", "2x", "+", "1"], nature: "Dérivée" },
 
-  // --- Intégrales ---
   { tokens: ["∫", "x", "dx", "=", "x²", "/", "2", "+", "C"], nature: "Intégrale" },
   { tokens: ["∫", "2x", "dx", "=", "x²", "+", "C"], nature: "Intégrale" },
   { tokens: ["∫", "1", "dx", "=", "x", "+", "C"], nature: "Intégrale" },
@@ -77,7 +66,6 @@ const IMPOSSIBLE_BANK: ImpossibleTarget[] = [
   { tokens: ["∫", "(", "2x", "+", "1", ")", "dx", "=", "x²", "+", "x", "+", "C"], nature: "Intégrale" },
   { tokens: ["∫", "(", "2x", "-", "1", ")", "dx", "=", "x²", "-", "x", "+", "C"], nature: "Intégrale" },
 
-  // --- Racines carrées ---
   { tokens: ["√", "4", "=", "2"], nature: "Racine carrée" },
   { tokens: ["√", "9", "=", "3"], nature: "Racine carrée" },
   { tokens: ["√", "0", "=", "0"], nature: "Racine carrée" },

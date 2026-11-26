@@ -1,8 +1,3 @@
-// Parser de formules chimiques simples (éléments, indices, groupes entre
-// parenthèses) et vérification d'équilibrage réel par comptage d'atomes —
-// contrairement au mode "Impossible" des maths, la réponse n'est pas
-// pré-écrite : n'importe quel jeu de coefficients valide est accepté.
-
 export type AtomCount = Record<string, number>;
 
 function mergeInto(target: AtomCount, source: AtomCount, multiplier: number) {
@@ -11,7 +6,6 @@ function mergeInto(target: AtomCount, source: AtomCount, multiplier: number) {
   }
 }
 
-// Parse une formule comme "H2O", "Fe2O3", "Ca(OH)2", "Al2(SO4)3"
 export function parseFormula(formula: string): AtomCount {
   let pos = 0;
 
@@ -29,10 +23,10 @@ export function parseFormula(formula: string): AtomCount {
     while (pos < formula.length && formula[pos] !== ")") {
       const c = formula[pos];
       if (c === "(") {
-        pos++; // skip '('
+        pos++;
         const inner = parseGroup();
         if (formula[pos] !== ")") throw new Error("Parenthèse manquante");
-        pos++; // skip ')'
+        pos++;
         const mult = readNumber(1);
         mergeInto(counts, inner, mult);
         continue;
@@ -61,9 +55,6 @@ export function parseFormula(formula: string): AtomCount {
 export interface ChemEquation {
   reactants: string[];
   products: string[];
-  // Coefficients corrects les plus simples, utilisés uniquement pour
-  // révéler la réponse en cas d'échec — jamais pour la vérification,
-  // qui reste un vrai calcul sur ce que tape le joueur.
   coeffs: number[];
 }
 
@@ -179,8 +170,6 @@ export function pickChemEquation(level: "facile" | "moyen" | "difficile"): ChemE
   return bank[Math.floor(Math.random() * bank.length)];
 }
 
-// Type de réaction déduit de la forme de l'équation (nombre de réactifs/produits,
-// présence de O2, motif "combustion" CO2+H2O), affiché comme indice avant de jouer.
 export function classifyReaction(eq: ChemEquation): string {
   if (eq.reactants.length === 1 && eq.products.length >= 2) return "Décomposition";
 

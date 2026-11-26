@@ -1,16 +1,3 @@
-// Banque d'exercices de programmation, façon "Impossible" (comparaison des
-// tokens par position, pas de vraie exécution — Java/C++ ne peuvent de toute
-// façon pas s'exécuter dans le navigateur sans serveur). Même exercice
-// traduit dans les 4 langages, pour que la logique à trouver soit identique.
-//
-// Deux façons de jouer un même exercice (voir useProgPageBlanche /
-// useProgATrous) :
-// - "Page blanche" : deviner toute la séquence de tokens, comme le mode
-//   Impossible des maths ou les Formules physiques.
-// - "Extrait à trous" : le squelette (mots-clés, ponctuation) est déjà
-//   affiché, seuls les tokens "intéressants" (identifiants, valeurs,
-//   opérateurs) sont à deviner — voir isBlankable().
-
 export type ProgLang = "javascript" | "python" | "java" | "cpp";
 export type ProgLevel = "facile" | "moyen" | "difficile";
 
@@ -18,8 +5,8 @@ export interface ProgExercise {
   titre: string;
   enonce: string;
   tokens: string[];
-  keys: string[]; // ponctuation / opérateurs
-  extraKeys: string[]; // mots-clés / identifiants (hors chiffres, toujours dispo)
+  keys: string[];
+  extraKeys: string[];
 }
 
 export const PROG_LANG_LABELS: Record<ProgLang, string> = {
@@ -29,8 +16,6 @@ export const PROG_LANG_LABELS: Record<ProgLang, string> = {
   cpp: "C++",
 };
 
-// Tokens jamais mis à trou : ponctuation structurelle + mots-clés de
-// contrôle. Tout le reste (noms, valeurs, opérateurs) devient un trou.
 const ALWAYS_VISIBLE = new Set([
   "(", ")", "{", "}", ",", ";", ":",
   "function", "def", "return", "if", "for", "while", "in", "range", "boolean", "bool", "int", "let",

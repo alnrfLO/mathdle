@@ -32,9 +32,6 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
   const [attempts, setAttempts] = useState(0);
   const [lives, setLives] = useState(MAX_LIVES);
   const [gameOver, setGameOver] = useState(false);
-  // En difficile, certains coefficients ont 2 chiffres (ex : 13, 25) : on
-  // garde le curseur sur la case après le 1er chiffre, et on passe à la
-  // suivante après le 2e chiffre ou avec la touche "→".
   const [typedInSlot, setTypedInSlot] = useState(false);
   const twoDigits = level === "difficile";
 
@@ -88,7 +85,6 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
 
       const current = coeffs[activeIndex];
       if (typedInSlot && current !== null && current < 10) {
-        // 2e chiffre : on complète le nombre et on passe à la case suivante.
         setCoeffs((c) => {
           const next = [...c];
           next[activeIndex] = current * 10 + digit;
@@ -143,9 +139,6 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
       return;
     }
 
-    // Plus d'essais pour cette équation : ça coûte une vie. On affiche la
-    // solution et on attend que la personne relance elle-même (pas de
-    // timeout) pour lui laisser le temps de la lire.
     const remainingLives = lives - 1;
     if (remainingLives <= 0) {
       onStreakReset();
