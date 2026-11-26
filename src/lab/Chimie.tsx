@@ -129,7 +129,7 @@ export function MasseMolaire({ level }: { level: Difficulty }) {
     const t = tries + 1;
     setTries(t);
     if (Math.abs(v - M) <= Math.max(0.3, M * 0.005)) {
-      setMsg(ok(`Exact ! M(${f}) = ${fmt(M, 5)} g/mol`));
+      setMsg(ok(`Exact : M(${f}) = ${fmt(M, 5)} g/mol`));
       setDone(true);
       recordResult("masse", true);
     } else if (t >= 3) {

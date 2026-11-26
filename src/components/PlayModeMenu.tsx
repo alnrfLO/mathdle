@@ -26,7 +26,7 @@ export function PlayModeMenu({ subjectLabel, dayStreak, alreadyPlayedToday, onCh
             {alreadyPlayedToday
               ? "Déjà jouée aujourd'hui"
               : dayStreak > 0
-                ? `Série de jours : ${dayStreak} 🔥`
+                ? `Série : ${dayStreak} jour${dayStreak > 1 ? "s" : ""}`
                 : "Une seule chance, chaque jour"}
           </span>
         </span>

@@ -102,7 +102,7 @@ export function Suites({ level }: { level: Difficulty }) {
     const v = parseNumber(input);
     if (v === null) return setMsg(err("Tape un nombre (ex. 48 ou 0,5)"));
     if (closeEnough(v, suite.next, 1e-9)) {
-      setMsg(ok(`Bravo ! Suite ${suite.nature} : ${suite.formule}`));
+      setMsg(ok(`Bravo, suite ${suite.nature} : ${suite.formule}`));
       setDone(true);
       recordResult("suites", true);
       return;

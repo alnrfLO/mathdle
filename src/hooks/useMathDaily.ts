@@ -46,7 +46,7 @@ export function useMathDaily() {
     }
     const check = checkEquation(currentGuess.join(""));
     if (!check.valid) {
-      setMessage({ text: `Équation invalide — ${check.reason}`, variant: "error" });
+      setMessage({ text: `Équation invalide, ${check.reason}`, variant: "error" });
       return;
     }
     setMessage(EMPTY_MESSAGE);

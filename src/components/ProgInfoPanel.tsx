@@ -15,7 +15,7 @@ export function ProgInfoPanel({ progType }: ProgInfoPanelProps) {
       <>
         <b>Extrait à trous :</b> le squelette du code (mots-clés, ponctuation) est déjà affiché.
         Clique sur une case vide et tape le bon token pour la remplir. Une fois tout rempli,
-        vérifie — comme en Chimie, une équation vide te coûte une vie si tu épuises tes essais.
+        vérifie, comme en Chimie, une équation vide te coûte une vie si tu épuises tes essais.
       </>
     ) : (
       <>

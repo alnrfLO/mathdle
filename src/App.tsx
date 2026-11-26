@@ -837,7 +837,7 @@ function App() {
 
       {subject !== "menu" && (
         <aside className="desk-note">
-          <p className="desk-note__pin">📌</p>
+          <p className="desk-note__pin" aria-hidden="true" />
           <h2>Aide-mémoire</h2>
           {subject === "math" ? (
             <InfoPanel mode={mathdle.mode} level={mathdle.level} />
@@ -847,7 +847,7 @@ function App() {
             <ProgInfoPanel progType={progType} />
           )}
           <p className="desk-note__footer">
-            Mathdle — fait pour s'entraîner, pas pour tricher en cours.
+            Mathdle, fait pour s'entraîner, pas pour tricher en cours
           </p>
         </aside>
       )}

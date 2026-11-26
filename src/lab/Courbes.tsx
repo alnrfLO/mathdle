@@ -151,7 +151,7 @@ export function Courbes({ level }: { level: Difficulty }) {
       const g = [...guesses, { src: input, fn: c.fn }];
       setGuesses(g);
       if (same(target.fn, c.fn)) {
-        setMsg(ok(`Trouvé ! f(x) = ${input}`));
+        setMsg(ok(`Trouvé : f(x) = ${input}`));
         setDone(true);
         recordResult("courbes", true);
       } else if (g.length >= MAX) {

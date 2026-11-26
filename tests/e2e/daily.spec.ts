@@ -27,7 +27,7 @@ test("when the maths puzzle is solved on the second try, the share text and the 
   await page.keyboard.press("Enter");
   await expect(page.locator(".daily")).toContainText("Trouvé");
 
-  await page.getByText("Partager mon résultat").click();
+  await page.locator(".share-btn").click();
   const shared = await page.evaluate(() => navigator.clipboard.readText());
   expect(shared).toContain("2/6");
   expect(shared).toContain("🟩");
@@ -38,7 +38,7 @@ test("when the maths puzzle is solved on the second try, the share text and the 
   await expect(page.locator(".daily-hub")).toContainText("Terminée");
   await page.locator(".daily-hub button", { hasText: "MATHS" }).click();
   await expect(page.locator(".daily")).toContainText("Déjà réussie");
-  await expect(page.getByText("Partager mon résultat")).toBeVisible();
+  await expect(page.locator(".share-btn")).toBeVisible();
 });
 
 test("when the sciences puzzle is answered, it is won and can be shared", async ({ page }) => {
@@ -47,7 +47,7 @@ test("when the sciences puzzle is answered, it is won and can be shared", async 
   for (const ch of String(scienceAnswer).replace(".", ",")) await page.keyboard.press(ch);
   await page.keyboard.press("Enter");
   await expect(page.locator(".calculator__screen")).toContainText("Trouvé");
-  await page.getByText("Partager mon résultat").click();
+  await page.locator(".share-btn").click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toContain("Sciences");
 });
 

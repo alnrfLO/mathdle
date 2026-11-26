@@ -66,7 +66,7 @@ export function PhysicsScreen({
       {gameOver && (
         <div className="physics__reveal">
           <p className={won ? "physics__reveal-text physics__reveal-text--won" : "physics__reveal-text"}>
-            {won ? "Trouvé !" : `Perdu, c'était ${target.join(" ")}`}
+            {won ? "Trouvé" : `Perdu, c'était ${target.join(" ")}`}
           </p>
           <button type="button" className="science-btn science-btn--primary" onClick={onSkip}>
             Nouvelle formule

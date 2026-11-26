@@ -34,18 +34,18 @@ export function ScienceDailyScreen({
       <div className="daily">
         <p className="daily__eyebrow">ÉNIGME DU JOUR</p>
         <p className={"daily__result" + (lastWon ? " daily__result--won" : "")}>
-          {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui — perdu"}
+          {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui, perdu"}
         </p>
-        <p className="daily__streak">Série de jours : {dayStreak} 🔥</p>
+        <p className="daily__streak">Série : {dayStreak} jour{dayStreak > 1 ? "s" : ""}</p>
         <StoredShareButton title="Sciences" />
-        <p className="daily__comeback">Reviens demain pour la prochaine !</p>
+        <p className="daily__comeback">Prochaine énigme demain</p>
       </div>
     );
   }
 
   return (
     <div className="science">
-      <p className="science__eyebrow">ÉNIGME DU JOUR · SÉRIE {dayStreak} 🔥</p>
+      <p className="science__eyebrow">ÉNIGME DU JOUR · SÉRIE {dayStreak} J</p>
 
       <div className="science__readout">
         <div className="science__question">
@@ -65,7 +65,7 @@ export function ScienceDailyScreen({
 
       {gameOver && (
         <p className={"daily__result" + (won ? " daily__result--won" : "")}>
-          {won ? "Trouvé ! Reviens demain 🔥" : "Reviens demain pour la suivante"}
+          {won ? "Trouvé. Prochaine énigme demain" : "Prochaine énigme demain"}
         </p>
       )}
       {gameOver && <ShareButton title="Sciences" won={won} max={maxAttempts} extra={String(attempts)} />}

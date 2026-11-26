@@ -56,7 +56,8 @@ test.describe("help", () => {
     await page.getByRole("button", { name: "Indice" }).click();
     await expect(page.locator(".ctok--hint")).toHaveCount(1);
     await page.getByRole("button", { name: "Voir la solution" }).click();
-    await expect(page.locator(".physics__reveal")).toContainText("c'était");
+    await expect(page.locator(".physics__reveal")).toContainText("voici la solution");
+    await expect(page.locator(".solution-code")).toContainText("return");
   });
 
   test("when today's puzzle is played, there is no hint or solution button", async ({ page }) => {

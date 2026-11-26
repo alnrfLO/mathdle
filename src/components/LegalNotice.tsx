@@ -26,7 +26,7 @@ export function LegalNotice({ onClose }: LegalNoticeProps) {
 
         <h3>Hébergement</h3>
         <p>
-          Ce site est hébergé par Vercel Inc. — 340 S Lemon Ave #4133, Walnut, CA 91789,
+          Ce site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789,
           États-Unis (vercel.com).
         </p>
 

@@ -11,7 +11,7 @@ interface SubjectMenuProps {
 
 const DOORS: { id: Subject; icon: string; title: string; desc: string }[] = [
   { id: "math", icon: "∑", title: "MATHS", desc: "Équations, cible π, suites, courbes" },
-  { id: "science", icon: "⚗", title: "SCIENCES", desc: "Chimie et physique" },
+  { id: "science", icon: "H₂O", title: "SCIENCES", desc: "Chimie et physique" },
   { id: "prog", icon: "</>", title: "PROGRAMMATION", desc: "Console Python / JS, extraits à trous" },
 ];
 
@@ -22,7 +22,7 @@ export function SubjectMenu({ onChoose, onDaily, onStats, dailyDone, dayStreak }
         <img className="subject-menu__logo" src="/favicon.svg" alt="" width={56} height={56} />
         <div>
           <h1 className="subject-menu__name">MATHDLE</h1>
-          <p className="subject-menu__tagline">Devine l'équation.</p>
+          <p className="subject-menu__tagline">Devine l'équation, la formule, le code</p>
         </div>
       </div>
 
@@ -35,13 +35,13 @@ export function SubjectMenu({ onChoose, onDaily, onStats, dailyDone, dayStreak }
       <div className="doors">
         {DOORS.map((d) => (
           <button key={d.id} type="button" className="door" onClick={() => onChoose(d.id)}>
-            <span className="door__icon">{d.icon}</span>
+            <span className={"door__icon" + (d.id === "science" ? " door__icon--date" : "")}>{d.icon}</span>
             <span className="door__title">{d.title}</span>
             <span className="door__desc">{d.desc}</span>
           </button>
         ))}
         <button type="button" className="door door--daily" onClick={onDaily}>
-          <span className="door__icon">★</span>
+          <span className="door__icon door__icon--date">{new Date().getDate()}/{new Date().getMonth() + 1}</span>
           <span className="door__title">ÉNIGME DU JOUR</span>
           <span className="door__desc">
             {dailyDone ? "Maths faite ✓ · " : ""}maths, sciences, code{dayStreak > 0 ? ` · série ${dayStreak} j` : ""}
@@ -50,7 +50,7 @@ export function SubjectMenu({ onChoose, onDaily, onStats, dailyDone, dayStreak }
       </div>
 
       <button type="button" className="subject-menu__stats" onClick={onStats}>
-        📊 Mes statistiques
+        Mes statistiques
       </button>
     </div>
   );

@@ -83,7 +83,7 @@ export function useProgATrous(lang: ProgLang, level: ProgLevel, onCorrect: () =>
     }
 
     if (allCorrect) {
-      setMessage({ text: "Correct !", variant: "success" });
+      setMessage({ text: "Correct", variant: "success" });
       setLives(MAX_LIVES);
       onCorrect();
       window.setTimeout(() => newExercise(lang, level), 1100);
@@ -105,10 +105,10 @@ export function useProgATrous(lang: ProgLang, level: ProgLevel, onCorrect: () =>
     if (remainingLives <= 0) {
       onStreakReset();
       setLives(MAX_LIVES);
-      setMessage({ text: `Plus de vies — série remise à zéro. C'était : ${solution}`, variant: "error" });
+      setMessage({ text: `Plus de vies, série remise à zéro. C'était : ${solution}`, variant: "error" });
     } else {
       setLives(remainingLives);
-      setMessage({ text: `Perdu — c'était : ${solution} (${remainingLives}/${MAX_LIVES} vies)`, variant: "error" });
+      setMessage({ text: `Perdu, c'était : ${solution} (${remainingLives}/${MAX_LIVES} vies)`, variant: "error" });
     }
     setGameOver(true);
   }, [gameOver, blanks, answers, exercise, attempts, lives, lang, level, newExercise, onCorrect, onStreakReset]);

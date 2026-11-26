@@ -24,14 +24,14 @@ export function Banner({
   let lifeNote: string | null = null;
   if (!won) {
     lifeNote = streakJustReset
-      ? "Plus de vies — série remise à zéro."
+      ? "Plus de vies, série remise à zéro."
       : `Il te reste ${lives}/${maxLives} vie${lives > 1 ? "s" : ""}.`;
   }
 
   return (
     <div className="banner">
       <h3 className={"banner__title" + (won ? " banner__title--won" : " banner__title--lost")}>
-        {won ? "Trouvé !" : "Perdu"}
+        {won ? "Trouvé" : "Perdu"}
       </h3>
       <p className="banner__text">L'équation était {target.join(sep)}.</p>
       {lifeNote && <p className="banner__lives">{lifeNote}</p>}

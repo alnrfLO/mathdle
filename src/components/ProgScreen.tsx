@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { CodeGrid } from "../lab/CodeGrid";
+import { solutionCode } from "../lab/codeLayout";
 import type { GridRow, MessageState } from "../hooks/useMathdle";
 import "./PhysicsScreen.css";
 
@@ -66,8 +67,9 @@ export function ProgScreen({
       {gameOver && (
         <div className="physics__reveal">
           <p className={won ? "physics__reveal-text physics__reveal-text--won" : "physics__reveal-text"}>
-            {won ? "Trouvé !" : `Perdu, c'était ${target.join(" ")}`}
+            {won ? "Trouvé" : "Perdu, voici la solution"}
           </p>
+          {!won && <pre className="solution-code">{solutionCode(target, lang)}</pre>}
           <button type="button" className="science-btn science-btn--primary" onClick={onSkip}>
             Nouvel exercice
           </button>

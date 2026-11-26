@@ -148,7 +148,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
             return (
               <li key={i}>
                 <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {l.hidden ? "🔒 test caché" : `${name}(${l.args.map((a) => pyShow(a, lang)).join(", ")})`}
+                  {l.hidden ? "test caché" : `${name}(${l.args.map((a) => pyShow(a, lang)).join(", ")})`}
                 </span>
                 <span className={pass ? "lab__ok" : "lab__ko"}>
                   {pass

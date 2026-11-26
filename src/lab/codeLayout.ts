@@ -85,3 +85,22 @@ function layoutPython(t: string[]): CodeLine[] {
   });
   return lines;
 }
+
+const NO_SPACE_BEFORE = new Set([")", ",", ";", "]", "."]);
+const NO_SPACE_AFTER = new Set(["(", "[", "."]);
+
+export function solutionCode(tokens: string[], lang: string): string {
+  return layoutCode(tokens, lang)
+    .map((line) => {
+      let out = "";
+      line.idx.forEach((i, k) => {
+        const tok = tokens[i];
+        const prev = k > 0 ? tokens[line.idx[k - 1]] : "";
+        const call = tok === "(" && /^[A-Za-z_]\w*$/.test(prev) && !/^(if|for|while|return|switch)$/.test(prev);
+        const glue = k === 0 || NO_SPACE_BEFORE.has(tok) || (tok === ":" && lang === "python") || NO_SPACE_AFTER.has(prev) || call || (/^\d$/.test(tok) && /^\d$/.test(prev));
+        out += (glue ? "" : " ") + tok;
+      });
+      return "    ".repeat(line.indent) + out;
+    })
+    .join("\n");
+}

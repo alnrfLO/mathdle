@@ -236,8 +236,29 @@
   color: var(--screen-bg);
 }
 
+.share {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.share__preview {
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--screen-bg-deep);
+  border: 1px solid rgba(41, 51, 31, 0.15);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--ink);
+  white-space: pre;
+}
+
 .share-btn {
-  margin: 4px auto 0;
+  margin: 0;
   display: block;
 }
 

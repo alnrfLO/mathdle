@@ -147,7 +147,7 @@ export function useMathdle() {
       const check = checkEquation(currentGuess.join(""));
       if (!check.valid) {
         triggerShake(rowIndex);
-        setClassiqueMessage({ text: `Équation invalide — ${check.reason}`, variant: "error" });
+        setClassiqueMessage({ text: `Équation invalide, ${check.reason}`, variant: "error" });
         return;
       }
     }
@@ -211,12 +211,12 @@ export function useMathdle() {
     }
     const check = checkExpression(cibleInput);
     if (!check.valid) {
-      setCibleMessage({ text: `Expression invalide — ${check.reason}`, variant: "error" });
+      setCibleMessage({ text: `Expression invalide, ${check.reason}`, variant: "error" });
       return;
     }
     if (Math.abs((check.value as number) - cibleTarget) < 1e-9) {
       setStreak((s) => s + 1);
-      setCibleMessage({ text: `Exact ! ${cibleInput} = ${cibleTarget}`, variant: "success" });
+      setCibleMessage({ text: `Exact : ${cibleInput} = ${cibleTarget}`, variant: "success" });
       window.setTimeout(() => startCible(level as Exclude<Difficulty, "impossible">), 1100);
     } else {
       setCibleMessage({ text: `Ça donne ${check.value}, pas ${cibleTarget}`, variant: "error" });

@@ -42,7 +42,7 @@ export function useScienceDaily() {
     if (result.valid) {
       setGameOver(true);
       setWon(true);
-      setMessage({ text: `Exact ! ${input} ${question.toUnit}`, variant: "success" });
+      setMessage({ text: `Exact : ${input} ${question.toUnit}`, variant: "success" });
       complete(true);
       return;
     }
@@ -52,7 +52,7 @@ export function useScienceDaily() {
       setGameOver(true);
       setWon(false);
       setMessage({
-        text: `Perdu — la bonne réponse était ${question.answer} ${question.toUnit}`,
+        text: `Perdu, la bonne réponse était ${question.answer} ${question.toUnit}`,
         variant: "error",
       });
       complete(false);

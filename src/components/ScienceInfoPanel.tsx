@@ -26,7 +26,7 @@ export function ScienceInfoPanel({ subject }: ScienceInfoPanelProps) {
     content = (
       <>
         <b>Formules :</b> devine la formule physique secrète avant d'épuiser tes essais, comme en
-        mode Classique — un indice affiché en haut donne le domaine (Mécanique, Énergie,
+        mode Classique, un indice affiché en haut donne le domaine (Mécanique, Énergie,
         Électricité, Ondes, Gravitation, Pression ou Thermique). Chaque case devient{" "}
         <b style={{ color: "var(--state-correct)" }}>verte</b> (bon caractère, bonne place) ou{" "}
         <b style={{ color: "var(--state-present)" }}>orange</b> (bon caractère, mauvaise place)
@@ -37,7 +37,7 @@ export function ScienceInfoPanel({ subject }: ScienceInfoPanelProps) {
     content = (
       <>
         <b>Conversions :</b> une valeur avec son unité s'affiche, convertis-la dans l'unité
-        demandée. Pas de nombre d'essais limité — tu peux corriger ta réponse et revérifier, ou
+        demandée. Pas de nombre d'essais limité, tu peux corriger ta réponse et revérifier, ou
         passer la question si elle te bloque.
       </>
     );

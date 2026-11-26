@@ -51,11 +51,11 @@ export function CiblePi() {
       if (!/π|pi/i.test(input)) return setMsg(err("Ton expression doit utiliser π"));
       if (c.ops < minOps) return setMsg(err(`Il faut au moins ${minOps} opération${minOps > 1 ? "s" : ""}`));
       const norm = input.replace(/\s/g, "").replace(/pi/gi, "π").replace(/−/g, "-");
-      if (norm === target.label.replace(/−/g, "-")) return setMsg(err("Trop facile : recopier la cible ne compte pas 😄"));
+      if (norm === target.label.replace(/−/g, "-")) return setMsg(err("Trop facile : recopier la cible ne compte pas"));
       const v = c.fn(0);
       if (!Number.isFinite(v)) return setMsg(err("Résultat impossible (division par 0 ?)"));
       if (closeEnough(v, target.value, 1e-9)) {
-        setMsg(ok(`Exact ! ${input} = ${target.label}`));
+        setMsg(ok(`Exact : ${input} = ${target.label}`));
         setDone(true);
         recordResult("pi", true);
       } else {

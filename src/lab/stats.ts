@@ -62,13 +62,14 @@ export function totals(all = loadStats()) {
   return { played, won, best, pct: played ? Math.round((won / played) * 100) : 0 };
 }
 
-export async function shareText(text: string): Promise<"shared" | "copied" | "failed"> {
+export async function shareText(text: string): Promise<"shared" | "copied" | "failed" | "cancelled"> {
   try {
     if (navigator.share) {
       await navigator.share({ text });
       return "shared";
     }
-  } catch {
+  } catch (e) {
+    if (e instanceof DOMException && e.name === "AbortError") return "cancelled";
   }
   try {
     await navigator.clipboard.writeText(text);

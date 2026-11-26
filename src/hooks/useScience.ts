@@ -42,12 +42,12 @@ export function useScience(onCorrect: () => void) {
     const result = checkConversionAnswer(input, question);
     if (!result.valid) {
       setMessage({
-        text: result.reason ?? "Pas tout à fait — réessaie",
+        text: result.reason ?? "Pas tout à fait, réessaie",
         variant: "error",
       });
       return;
     }
-    setMessage({ text: `Exact ! ${input} ${question.toUnit}`, variant: "success" });
+    setMessage({ text: `Exact : ${input} ${question.toUnit}`, variant: "success" });
     onCorrect();
     window.setTimeout(() => newQuestion(level), 1000);
   }, [input, question, level, newQuestion, onCorrect]);

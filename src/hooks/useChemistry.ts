@@ -122,7 +122,7 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
     const result = checkBalance(equation, filled);
 
     if (result.balanced && result.simplified) {
-      setMessage({ text: "Équilibré !", variant: "success" });
+      setMessage({ text: "Équilibré", variant: "success" });
       setLives(MAX_LIVES);
       onCorrect();
       window.setTimeout(() => newEquation(level), 1100);
@@ -134,7 +134,7 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
       setAttempts((a) => a + 1);
       const reason = !result.balanced
         ? result.reason ?? "Pas encore équilibré"
-        : "Équilibré, mais simplifiable — trouve la proportion la plus simple";
+        : "Équilibré, mais simplifiable, trouve la proportion la plus simple";
       setMessage({ text: `${reason} (${attemptsLeft} essai${attemptsLeft > 1 ? "s" : ""} restant${attemptsLeft > 1 ? "s" : ""})`, variant: "error" });
       return;
     }
@@ -144,13 +144,13 @@ export function useChemistry(onCorrect: () => void, onStreakReset: () => void) {
       onStreakReset();
       setLives(MAX_LIVES);
       setMessage({
-        text: `Plus de vies — série remise à zéro. C'était ${formatSolution(equation)}`,
+        text: `Plus de vies, série remise à zéro. C'était ${formatSolution(equation)}`,
         variant: "error",
       });
     } else {
       setLives(remainingLives);
       setMessage({
-        text: `Perdu — c'était ${formatSolution(equation)} (${remainingLives}/${MAX_LIVES} vies)`,
+        text: `Perdu, c'était ${formatSolution(equation)} (${remainingLives}/${MAX_LIVES} vies)`,
         variant: "error",
       });
     }

@@ -92,3 +92,11 @@ describe("console exercises", () => {
     expect(deepEqual(true, 1)).toBe(false);
   });
 });
+
+describe("solution display", () => {
+  it("when a lost code answer is shown, it reads like real indented code", async () => {
+    const { solutionCode } = await import("../../src/lab/codeLayout");
+    const tokens = ["def", "f", "(", "n", ")", ":", "return", "n", "+", "1"];
+    expect(solutionCode(tokens, "python")).toBe("def f(n):\n    return n + 1");
+  });
+});
