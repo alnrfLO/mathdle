@@ -76,6 +76,14 @@ export function usePhysicsFormulas(onCorrect: () => void) {
     }
   }, [gameOver, currentGuess, target, rowIndex, level, onCorrect]);
 
+  const giveUp = useCallback(() => {
+    if (gameOver) return;
+    setCurrentGuess([]);
+    setMessage(EMPTY_MESSAGE);
+    setGameOver(true);
+    setWon(false);
+  }, [gameOver]);
+
   const skip = useCallback(() => newFormula(level), [level, newFormula]);
 
   return {
@@ -96,5 +104,6 @@ export function usePhysicsFormulas(onCorrect: () => void) {
     backspace,
     submitGuess,
     skip,
+    giveUp,
   };
 }

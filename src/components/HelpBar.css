@@ -1,0 +1,45 @@
+.helpbar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 8px 0 4px;
+}
+
+.helpbar__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.helpbar__btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--screen-bg);
+  cursor: pointer;
+}
+
+.helpbar__btn--ghost {
+  background: transparent;
+  color: var(--ink);
+}
+
+.helpbar__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+
+
+
+.helpbar__note {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+}

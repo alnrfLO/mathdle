@@ -204,3 +204,76 @@
 .calculator__brand-logo {
   image-rendering: pixelated;
 }
+
+@media (max-width: 600px) {
+  html {
+    font-size: 18px;
+  }
+
+  .scene {
+    padding: max(10px, env(safe-area-inset-top)) 6px 28px;
+  }
+
+  .calculator {
+    max-width: none;
+    border-radius: 18px;
+    padding: 12px 8px 8px;
+  }
+
+  .calculator__screen-frame {
+    padding: 6px;
+  }
+
+  .calculator__screen {
+    padding: 10px 6px 8px;
+  }
+
+  .keyboard {
+    gap: 7px;
+    padding: 12px 2px 4px;
+  }
+
+  .kb-row {
+    gap: 6px;
+  }
+
+  .key {
+    max-width: 64px;
+    height: 50px;
+    font-size: 1.05rem;
+  }
+
+  .key--symbol,
+  .key--long {
+    max-width: 78px;
+    font-size: 0.72rem;
+  }
+
+  .key--long {
+    max-width: none;
+  }
+
+  .key--wide {
+    max-width: 130px;
+    font-size: 0.8rem;
+  }
+
+  .cell {
+    width: clamp(28px, 8.6vw, 40px);
+    height: clamp(36px, 10vw, 46px);
+  }
+
+  .cell--token {
+    width: auto;
+    height: 36px;
+  }
+
+  .ctok {
+    font-size: 0.86rem;
+    padding: 4px 6px;
+  }
+
+  .codegrid__try--done .ctok {
+    font-size: 0.72rem;
+  }
+}

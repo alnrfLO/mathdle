@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Grid } from "./Grid";
 import type { GridRow, MessageState } from "../hooks/useMathdle";
 import "./PhysicsScreen.css";
@@ -14,6 +15,8 @@ interface PhysicsScreenProps {
   message: MessageState;
   onSkip: () => void;
   onSubmit: () => void;
+  help?: ReactNode;
+  hints?: number[];
 }
 
 export function PhysicsScreen({
@@ -28,6 +31,8 @@ export function PhysicsScreen({
   message,
   onSkip,
   onSubmit,
+  help,
+  hints,
 }: PhysicsScreenProps) {
   return (
     <div className="physics">
@@ -50,15 +55,18 @@ export function PhysicsScreen({
         rowIndex={rowIndex}
         maxAttempts={maxAttempts}
         gameOver={gameOver}
+        hints={hints}
         isSymbolic
         shakeRow={null}
         popRow={null}
       />
 
+      {!gameOver && help}
+
       {gameOver && (
         <div className="physics__reveal">
           <p className={won ? "physics__reveal-text physics__reveal-text--won" : "physics__reveal-text"}>
-            {won ? "Trouvé !" : `Perdu — c'était ${target.join(" ")}`}
+            {won ? "Trouvé !" : `Perdu, c'était ${target.join(" ")}`}
           </p>
           <button type="button" className="science-btn science-btn--primary" onClick={onSkip}>
             Nouvelle formule

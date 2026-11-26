@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { Difficulty } from "../game/types";
 import { LabShell, NO_MSG, err, ok, pick, randInt } from "./LabShell";
 import { compile, ExprError, closeEnough } from "./expr";
 import { recordResult } from "./stats";
@@ -15,11 +14,10 @@ function gcd(a: number, b: number): number {
   return b === 0 ? Math.abs(a) : gcd(b, a % b);
 }
 
-function makeTarget(level: Difficulty): Target {
-  const qs = level === "facile" ? [1, 2, 4] : level === "moyen" ? [3, 4, 5, 6] : [5, 6, 8, 10, 12];
-  let p = randInt(1, level === "facile" ? 3 : 7);
-  let q = pick(qs);
-  if (level !== "facile" && Math.random() < 0.3) p = -p;
+function makeTarget(): Target {
+  let p = randInt(1, 6);
+  let q = pick([1, 2, 3, 4, 5, 6, 8]);
+  if (Math.random() < 0.25) p = -p;
   const g = gcd(p, q);
   p /= g;
   q /= g;
@@ -28,27 +26,22 @@ function makeTarget(level: Difficulty): Target {
   return { p, q, label, value: (p * Math.PI) / q };
 }
 
-const MIN_OPS: Record<Difficulty, number> = { facile: 1, moyen: 2, difficile: 3, impossible: 4 };
+const MIN_OPS = 2;
 const PAD = ["π", "+", "-", "*", "/", "(", ")", "^", "√("];
 
-export function CiblePi({ level }: { level: Difficulty }) {
-  const [target, setTarget] = useState(() => makeTarget(level));
-  const [lastLevel, setLastLevel] = useState(level);
+export function CiblePi() {
+  const [target, setTarget] = useState(makeTarget);
   const [input, setInput] = useState("");
   const [msg, setMsg] = useState(NO_MSG);
   const [done, setDone] = useState(false);
-  const minOps = MIN_OPS[level];
+  const minOps = MIN_OPS;
 
   const next = () => {
-    setTarget(makeTarget(level));
+    setTarget(makeTarget());
     setInput("");
     setMsg(NO_MSG);
     setDone(false);
   };
-  if (level !== lastLevel) {
-    setLastLevel(level);
-    next();
-  }
 
   const check = () => {
     if (done) return;

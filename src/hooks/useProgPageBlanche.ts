@@ -70,6 +70,14 @@ export function useProgPageBlanche(lang: ProgLang, level: ProgLevel, onCorrect: 
     }
   }, [gameOver, currentGuess, target, rowIndex, onCorrect]);
 
+  const giveUp = useCallback(() => {
+    if (gameOver) return;
+    setCurrentGuess([]);
+    setMessage(EMPTY_MESSAGE);
+    setGameOver(true);
+    setWon(false);
+  }, [gameOver]);
+
   const skip = useCallback(() => newExercise(lang, level), [lang, level, newExercise]);
 
   return {
@@ -88,5 +96,6 @@ export function useProgPageBlanche(lang: ProgLang, level: ProgLevel, onCorrect: 
     backspace,
     submitGuess,
     skip,
+    giveUp,
   };
 }

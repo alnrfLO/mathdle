@@ -80,3 +80,20 @@
   font-size: clamp(0.56rem, 1.7vw, 0.64rem);
   white-space: nowrap;
 }
+
+.key.key--correct {
+  background: var(--state-correct);
+  color: #fff;
+}
+
+.key.key--present {
+  background: var(--state-present);
+  color: #fff;
+}
+
+.key.key--absent {
+  background: #5d6358;
+  color: #b9bfb3;
+  box-shadow: none;
+  opacity: 0.7;
+}

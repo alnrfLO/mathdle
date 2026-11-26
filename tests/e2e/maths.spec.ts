@@ -53,22 +53,23 @@ test.describe("sequences", () => {
 test.describe("pi target", () => {
   test.beforeEach(async ({ page }) => pick(page, ".sub-switch button", "Cible π"));
 
-  for (const [level, minOps] of [["Facile", 1], ["Moyen", 2], ["Difficile", 3], ["Impossible", 4]] as const) {
-    test(`when playing ${level}, an equivalent expression wins and one without π is refused`, async ({ page }) => {
-      await pick(page, ".softkey", level);
-      const target = await page.locator(".lab__big").innerText();
-      const m = target.match(/(−?)(\d*)π(?:\/(\d+))?/)!;
-      const p = (m[1] ? -1 : 1) * Number(m[2] || 1);
-      const q = Number(m[3] || 1);
-      await answer(page, "3");
-      await expect(message(page)).toContainText("π");
-      await answer(page, `(${p}*π)/${q}` + "+0*π".repeat(minOps >= 4 ? 2 : 1));
-      await expect(message(page)).toContainText("Exact");
-    });
-  }
+  test("when the pi target is open, there is no difficulty choice", async ({ page }) => {
+    await expect(page.locator(".softkey")).toHaveCount(0);
+    await expect(page.locator(".lab__eyebrow")).toContainText("AU MOINS 2");
+  });
+
+  test("when an equivalent expression is entered, it wins and one without π is refused", async ({ page }) => {
+    const target = await page.locator(".lab__big").innerText();
+    const m = target.match(/(−?)(\d*)π(?:\/(\d+))?/)!;
+    const p = (m[1] ? -1 : 1) * Number(m[2] || 1);
+    const q = Number(m[3] || 1);
+    await answer(page, "3");
+    await expect(message(page)).toContainText("π");
+    await answer(page, `(${p}*π)/${q}+0*π`);
+    await expect(message(page)).toContainText("Exact");
+  });
 
   test("when the expression is too short, broken or wrong, it explains why", async ({ page }) => {
-    await pick(page, ".softkey", "Moyen");
     await answer(page, "π");
     await expect(message(page)).toContainText("au moins");
     await answer(page, "π/0+");

@@ -20,6 +20,8 @@ import { ProgDailyScreen } from "./components/ProgDailyScreen";
 import { ProgInfoPanel } from "./components/ProgInfoPanel";
 import { LegalNotice } from "./components/LegalNotice";
 import { Keyboard } from "./components/Keyboard";
+import { HelpBar } from "./components/HelpBar";
+import { useHelp } from "./hooks/useHelp";
 import { useMathdle } from "./hooks/useMathdle";
 import { useScience } from "./hooks/useScience";
 import { useChemistry } from "./hooks/useChemistry";
@@ -89,6 +91,7 @@ function App() {
   const [showStats, setShowStats] = useState(false);
   const [dailyHub, setDailyHub] = useState(false);
   const [pendingProgDaily, setPendingProgDaily] = useState(false);
+  const [fromHub, setFromHub] = useState(false);
   const [scienceStreak, setScienceStreak] = useState(0);
   const [progLang, setProgLang] = useState<ProgLang | null>(null);
   const [progLevel, setProgLevel] = useState<ProgLevel>("facile");
@@ -118,6 +121,9 @@ function App() {
   const progDailyPy = useProgDaily("python");
   const progDailyJava = useProgDaily("java");
   const progDailyCpp = useProgDaily("cpp");
+  const mathHelp = useHelp(mathdle.classique.target, mathdle.classique.rows);
+  const physicsHelp = useHelp(physics.target, physics.rows);
+  const progHelp = useHelp(progPageBlanche.target, progPageBlanche.rows);
   const progDailyByLang: Record<ProgLang, typeof progDailyJs> = {
     javascript: progDailyJs,
     python: progDailyPy,
@@ -262,6 +268,13 @@ function App() {
                   setDailyHub(false);
                   return;
                 }
+                if (fromHub) {
+                  setFromHub(false);
+                  setPendingProgDaily(false);
+                  setSubject("menu");
+                  setDailyHub(true);
+                  return;
+                }
                 if (playMode !== "menu") {
                   setPlayMode("menu");
                   return;
@@ -320,7 +333,10 @@ function App() {
           <div className="calculator__screen">
             {subject === "menu" && !dailyHub && (
               <SubjectMenu
-                onChoose={setSubject}
+                onChoose={(s) => {
+                  setFromHub(false);
+                  setSubject(s);
+                }}
                 onDaily={() => setDailyHub(true)}
                 onStats={() => setShowStats(true)}
                 dailyDone={mathDaily.alreadyPlayedToday}
@@ -342,6 +358,7 @@ function App() {
                     className="subject-menu__item"
                     onClick={() => {
                       setDailyHub(false);
+                      setFromHub(true);
                       setSubject(d.id);
                       if (d.id === "prog") setPendingProgDaily(true);
                       else setPlayMode("daily");
@@ -433,7 +450,7 @@ function App() {
 
             {subject === "math" && playMode === "serie" && (
               <>
-                <SoftkeyTabs level={mathdle.level} onChange={mathdle.setLevel} />
+                {mathExtra !== "pi" && <SoftkeyTabs level={mathdle.level} onChange={mathdle.setLevel} />}
                 <div className="sub-switch" role="tablist" aria-label="Type de jeu">
                   {MATH_EXTRAS.map((m) => (
                     <button key={m.id} type="button" className={mathExtra === m.id ? "is-active" : ""} onClick={() => setMathExtra(m.id)}>
@@ -446,7 +463,7 @@ function App() {
                 {mathExtra === "suites" ? (
                   <Suites level={mathdle.level} />
                 ) : mathExtra === "pi" ? (
-                  <CiblePi level={mathdle.level} />
+                  <CiblePi />
                 ) : mathExtra === "courbes" ? (
                   <Courbes level={mathdle.level} />
                 ) : mathdle.mode === "classique" ? (
@@ -476,7 +493,16 @@ function App() {
                       isSymbolic={isSymbolic}
                       shakeRow={mathdle.classique.shakeRow}
                       popRow={mathdle.classique.popRow}
+                      hints={mathHelp.hints}
                     />
+                    {!mathdle.classique.gameOver && (
+                      <HelpBar
+                        hints={mathHelp.hints}
+                        canHint={mathHelp.canHint}
+                        onHint={mathHelp.reveal}
+                        onSolution={mathdle.classique.giveUp}
+                      />
+                    )}
                     {mathdle.classique.showBanner && (
                       <Banner
                         won={mathdle.classique.won}
@@ -593,6 +619,15 @@ function App() {
                     message={physics.message}
                     onSkip={physics.skip}
                     onSubmit={physics.submitGuess}
+                    hints={physicsHelp.hints}
+                    help={
+                      <HelpBar
+                        hints={physicsHelp.hints}
+                        canHint={physicsHelp.canHint}
+                        onHint={physicsHelp.reveal}
+                        onSolution={physics.giveUp}
+                      />
+                    }
                   />
                 )}
 
@@ -656,6 +691,15 @@ function App() {
                     message={progPageBlanche.message}
                     onSkip={progPageBlanche.skip}
                     onSubmit={progPageBlanche.submitGuess}
+                    hints={progHelp.hints}
+                    help={
+                      <HelpBar
+                        hints={progHelp.hints}
+                        canHint={progHelp.canHint}
+                        onHint={progHelp.reveal}
+                        onSolution={progPageBlanche.giveUp}
+                      />
+                    }
                   />
                 )}
 
@@ -691,6 +735,7 @@ function App() {
             onBackspace={mathdle.mode === "classique" ? mathdle.classique.backspace : mathdle.cible.backspace}
             onSubmit={mathdle.mode === "classique" ? mathdle.classique.submitGuess : mathdle.cible.check}
             submitLabel={mathdle.mode === "classique" ? "Valider" : "OK"}
+            rows={mathdle.mode === "classique" ? mathdle.classique.rows : undefined}
           />
         )}
 
@@ -701,6 +746,7 @@ function App() {
             onBackspace={mathDaily.backspace}
             onSubmit={mathDaily.submitGuess}
             submitLabel="Valider"
+            rows={mathDaily.rows}
           />
         )}
 
@@ -732,6 +778,7 @@ function App() {
             onBackspace={physics.backspace}
             onSubmit={physics.submitGuess}
             submitLabel="Valider"
+            rows={physics.rows}
           />
         )}
 
@@ -753,6 +800,7 @@ function App() {
             onBackspace={progPageBlanche.backspace}
             onSubmit={progPageBlanche.submitGuess}
             submitLabel="Valider"
+            rows={progPageBlanche.rows}
           />
         )}
 
@@ -775,6 +823,7 @@ function App() {
             onBackspace={progDaily.backspace}
             onSubmit={progDaily.submitGuess}
             submitLabel="Valider"
+            rows={progDaily.rows}
           />
         )}
 

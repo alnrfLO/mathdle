@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { CodeGrid } from "../lab/CodeGrid";
 import type { GridRow, MessageState } from "../hooks/useMathdle";
 import "./PhysicsScreen.css";
@@ -16,6 +17,8 @@ interface ProgScreenProps {
   message: MessageState;
   onSkip: () => void;
   onSubmit: () => void;
+  help?: ReactNode;
+  hints?: number[];
 }
 
 export function ProgScreen({
@@ -32,6 +35,8 @@ export function ProgScreen({
   message,
   onSkip,
   onSubmit,
+  help,
+  hints,
 }: ProgScreenProps) {
   return (
     <div className="physics">
@@ -52,13 +57,16 @@ export function ProgScreen({
         rowIndex={rowIndex}
         maxAttempts={maxAttempts}
         gameOver={gameOver}
+        hints={hints}
         lang={lang}
       />
+
+      {!gameOver && help}
 
       {gameOver && (
         <div className="physics__reveal">
           <p className={won ? "physics__reveal-text physics__reveal-text--won" : "physics__reveal-text"}>
-            {won ? "Trouvé !" : `Perdu — c'était ${target.join(" ")}`}
+            {won ? "Trouvé !" : `Perdu, c'était ${target.join(" ")}`}
           </p>
           <button type="button" className="science-btn science-btn--primary" onClick={onSkip}>
             Nouvel exercice

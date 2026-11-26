@@ -11,6 +11,7 @@ export function CodeGrid({
   maxAttempts,
   gameOver,
   lang,
+  hints = [],
 }: {
   target: string[];
   rows: GridRow[];
@@ -19,6 +20,7 @@ export function CodeGrid({
   maxAttempts: number;
   gameOver: boolean;
   lang: string;
+  hints?: number[];
 }) {
   const lines = useMemo(() => layoutCode(target, lang), [target, lang]);
   const visible = gameOver ? rowIndex : Math.min(rowIndex + 1, maxAttempts);
@@ -37,14 +39,15 @@ export function CodeGrid({
                 <div key={li} className="codegrid__line" style={{ paddingLeft: `${l.indent * 1.4}em` }}>
                   {l.idx.map((i, k) => {
                     const value = row ? row.guess[i] : currentGuess[i];
-                    const state = row ? row.result[i] : value !== undefined ? "filled" : "empty";
+                    const hinted = active && value === undefined && hints.includes(i);
+                    const state = row ? row.result[i] : value !== undefined ? "filled" : hinted ? "hint" : "empty";
                     const tight = k > 0 && /^\d$/.test(target[i]) && /^\d$/.test(target[l.idx[k - 1]]);
                     return (
                       <span
                         key={i}
                         className={`ctok ctok--${state}` + (i === cursor ? " ctok--cursor" : "") + (tight ? " ctok--tight" : "")}
                       >
-                        {value ?? " "}
+                        {value ?? (hinted ? target[i] : " ")}
                       </span>
                     );
                   })}

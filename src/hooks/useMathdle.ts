@@ -185,6 +185,24 @@ export function useMathdle() {
     }
   }, [gameOver, currentGuess, target, rowIndex, level, triggerShake, lives]);
 
+  const giveUp = useCallback(() => {
+    if (gameOver) return;
+    setCurrentGuess([]);
+    setGameOver(true);
+    setWon(false);
+    setShowBanner(true);
+    setClassiqueMessage(EMPTY_MESSAGE);
+    const remaining = lives - 1;
+    if (remaining <= 0) {
+      setStreak(0);
+      setLives(MAX_LIVES);
+      setStreakJustReset(true);
+    } else {
+      setLives(remaining);
+      setStreakJustReset(false);
+    }
+  }, [gameOver, lives]);
+
   const checkCible = useCallback(() => {
     const cfg = CIBLE_LEVELS[level as Exclude<Difficulty, "impossible">];
     if (cibleInput.length !== cfg.length) {
@@ -236,6 +254,7 @@ export function useMathdle() {
       typeChar,
       backspace,
       submitGuess,
+      giveUp,
     },
     cible: {
       target: cibleTarget,

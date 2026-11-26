@@ -13,6 +13,7 @@ interface GridProps {
   isSymbolic: boolean;
   shakeRow: number | null;
   popRow: number | null;
+  hints?: number[];
 }
 
 export function Grid({
@@ -25,6 +26,7 @@ export function Grid({
   isSymbolic,
   shakeRow,
   popRow,
+  hints = [],
 }: GridProps) {
   const len = target.length;
   const visibleRows = gameOver ? rowIndex : Math.min(rowIndex + 1, maxAttempts);
@@ -59,7 +61,8 @@ export function Grid({
               if (isCurrentRow && currentGuess[c] !== undefined) {
                 return <Cell key={c} value={currentGuess[c]} state="filled" isToken={isSymbolic} />;
               }
-              return <Cell key={c} isToken={isSymbolic} />;
+              const hint = isCurrentRow && hints.includes(c) ? target[c] : undefined;
+              return <Cell key={c} isToken={isSymbolic} hint={hint} />;
             })}
           </div>
         );
