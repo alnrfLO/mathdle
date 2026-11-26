@@ -1,7 +1,26 @@
 {
   "name": "mathdle",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
+  "description": "Le Wordle des maths, des sciences et du code, dans une calculatrice graphique.",
+  "author": "Rafael Antunes Oliveira (https://rafatns.vercel.app)",
+  "license": "MIT",
+  "homepage": "https://mathdlee.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alnrfLO/mathdle.git"
+  },
+  "keywords": [
+    "wordle",
+    "nerdle",
+    "maths",
+    "physique",
+    "chimie",
+    "python",
+    "pyodide",
+    "react",
+    "pwa"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,113 +1,154 @@
+<div align="center">
+
+<img src="public/logo-512.png" alt="Logo Mathdle" width="112" />
+
 # Mathdle
 
-Un jeu façon Wordle/Nerdle, mais avec des équations mathématiques — et
-maintenant des sciences. Devine l'équation secrète, atteins une cible avec
-tes propres opérations, équilibre une réaction chimique ou retrouve une
-formule de physique, le tout dans l'interface d'une calculatrice graphique.
+**Le Wordle des maths, des sciences et du code, dans une calculatrice graphique.**
 
-**Jouer en ligne :** [mathdlee.vercel.app](https://mathdlee.vercel.app)
+Devine l'équation du jour, trace la bonne courbe, retrouve un élément du tableau périodique
+ou écris une vraie fonction Python qui passe des tests cachés.
 
-## Fonctionnalités
+[![Jouer](https://img.shields.io/badge/▶_Jouer-mathdlee.vercel.app-2f6b3a?style=for-the-badge)](https://mathdlee.vercel.app)
 
-### Maths
+[![Version](https://img.shields.io/github/v/release/alnrfLO/mathdle?label=version&color=e3a23c)](https://github.com/alnrfLO/mathdle/releases)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![PWA](https://img.shields.io/badge/PWA-installable-5A0FC8?logo=pwa&logoColor=white)
+![Vercel](https://img.shields.io/badge/déployé_sur-Vercel-000?logo=vercel)
+[![Licence MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
 
-- **Classique** — devine l'équation secrète en un nombre limité d'essais,
-  avec un retour case par case façon Wordle (bon chiffre/bonne place, bon
-  chiffre/mauvaise place, absent).
-  - 4 niveaux : Facile, Moyen, Difficile, et **Impossible** (limites,
-    intégrales, dérivées — comparaison symbolique par position).
-  - Système de vies : une défaite ne casse pas direct la série, il faut
-    épuiser 3 vies. Une victoire recharge tout.
-- **Cible libre** — construis une expression qui tombe pile sur un nombre
-  donné, avec un nombre de caractères imposé.
+</div>
 
-### Sciences
+<p align="center">
+  <img src="docs/screenshots/accueil.png" alt="Accueil" width="24%" />
+  <img src="docs/screenshots/maths-courbes.png" alt="Courbes" width="24%" />
+  <img src="docs/screenshots/console-python.png" alt="Console Python" width="24%" />
+  <img src="docs/screenshots/enigme-code.png" alt="Énigme du jour code" width="24%" />
+</p>
 
-- **Conversions d'unités** — convertis une valeur dans l'unité demandée
-  (longueurs, masses, volumes, temps, vitesses...). Pas d'essais limités,
-  on peut corriger sa réponse.
-- **Chimie** — équilibre une vraie équation chimique en tapant les
-  coefficients dans des cases cliquables. La vérification compte
-  réellement les atomes de chaque côté (parser de formules avec indices
-  et parenthèses), ce n'est pas une réponse pré-écrite. 4 essais, 3 vies.
-- **Formules physiques** — devine une formule (v = d/t, E = mc²...) case
-  par case, même mécanique que le mode Impossible des maths.
+---
 
-Les trois mini-jeux partagent une seule série de bonnes réponses.
+## Sommaire
 
-### Programmation
+- [Les jeux](#les-jeux)
+- [Énigme du jour, stats et partage](#énigme-du-jour-stats-et-partage)
+- [Installer sur téléphone](#installer-sur-téléphone)
+- [Comment ça marche](#comment-ça-marche)
+- [Lancer le projet](#lancer-le-projet)
+- [Structure](#structure)
+- [Crédits](#crédits)
 
-- **JavaScript, Python, Java et C++** : le même exercice est traduit dans
-  les 4 langages (somme, factorielle, PGCD, FizzBuzz, Fibonacci...),
-  sur 3 niveaux, soit 72 exercices au total.
-- **Page blanche** : retrouve tout le code de la fonction, token par token.
-- **Extrait à trous** : le squelette (mots-clés, ponctuation) est affiché,
-  il ne reste que les noms, valeurs et opérateurs à deviner.
+## Les jeux
 
-### En chiffres
+### ∑ Maths
 
-- 60 équations chimiques à équilibrer, 55 formules physiques, 69
-  énigmes de niveau Impossible et 72 exercices de programmation.
-- Les modes Classique, Cible libre et Conversions sont générés à
-  l'infini.
+| Mode | Principe |
+| --- | --- |
+| **Grille** | Devine l'équation secrète, retour case par case façon Wordle. 4 niveaux, jusqu'à **Impossible** (limites, intégrales, dérivées). |
+| **Cible libre** | Construis une expression qui tombe pile sur un nombre, avec un nombre de caractères imposé. |
+| **Cible π** | Vise une valeur comme `3π/4` : `6π/8`, `π/2 + π/4`… tout ce qui est égal est accepté. |
+| **Suites** | Trouve le terme suivant : arithmétique, géométrique, Fibonacci, carrés, arithmético-géométrique… |
+| **Courbes** | Une courbe s'affiche, tape `f(x)` et ta courbe se superpose. Des droites jusqu'à `x·sin(x)`. |
 
-### Mode Série vs Énigme du jour
+### ⚗ Sciences
 
-Chaque matière propose deux façons de jouer :
+| Chimie | Physique |
+| --- | --- |
+| **Équilibrage** : 60 réactions, les atomes sont vraiment comptés | **Formules** : 55 formules à deviner case par case |
+| **Élément mystère** : le Wordle du tableau périodique (Z, masse, colonne, ligne) | **Conversions** : générées à l'infini |
+| **Masse molaire** : de `H₂O` à `CuSO₄·5H₂O` | **Unités** : de `N` à `kg·m²/s³` |
+| **Oxydoréduction** : demi-équations en milieu acide | **Applications numériques** : valeur **et** unité |
+| | **Conversions en chaîne** : `km/h → m/s`, `mL → m³`, `kWh → J` |
 
-- **Mode Série** — parties illimitées, à volonté.
-- **Énigme du jour** — une seule tentative par jour, la même pour tout le
-  monde (graine pseudo-aléatoire basée sur la date). Une série de jours
-  réussis d'affilée est suivie en local (localStorage).
+<p align="center">
+  <img src="docs/screenshots/chimie-element.png" alt="Élément mystère" width="32%" />
+  <img src="docs/screenshots/maths-grille.png" alt="Grille" width="32%" />
+</p>
 
-## Stack technique
+### `</>` Programmation
 
-- [React](https://react.dev) + [TypeScript](https://www.typescriptlang.org)
-- [Vite](https://vite.dev)
-- Polices auto-hébergées via [Fontsource](https://fontsource.org)
-  (JetBrains Mono, VT323) — pas d'appel à un CDN externe
-- Déployé sur [Vercel](https://vercel.com)
+- **Console Python / JavaScript** : on écrit une vraie fonction, **exécutée dans le navigateur**.
+  - 13 exercices inspirés des épreuves pratiques de NSI (somme, maximum, palindrome, fusion de listes triées…).
+  - Tests visibles **et tests cachés tirés au hasard** à chaque exécution : renvoyer les réponses en dur ne passe pas.
+  - Vérification du nom et des paramètres, fonctions toutes faites interdites (`sum`, `max`, `sorted`…), arrêt après 4 s si boucle infinie.
+- **Extrait à trous** et **Page blanche** (Java, C++) : 72 exercices dans 4 langages, affichés comme du vrai code, indentation comprise.
 
-Aucune dépendance de state management externe : tout l'état de jeu vit
-dans des hooks React (`useMathdle`, `useScience`, `useChemistry`,
-`usePhysicsFormulas`, `useMathDaily`, `useScienceDaily`).
+## Énigme du jour, stats et partage
 
-## Lancer le projet en local
+- Une énigme par jour en **maths**, **sciences** et **code** (4 langages), **la même pour tout le monde**.
+- **Série de jours** : elle continue seulement si tu as réussi la veille.
+- **Statistiques** par mode : parties jouées, % de réussite, série en cours et record.
+- **Partage** façon Wordle, sans spoiler :
+
+```
+Mathdle Maths 2026-11-26 3/6
+🟨⬛⬛🟨🟨🟩
+🟩🟨⬛🟩🟩🟩
+🟩🟩🟩🟩🟩🟩
+mathdlee.vercel.app
+```
+
+Aucun compte, aucun cookie de suivi : tout reste dans le navigateur.
+
+## Installer sur téléphone
+
+Mathdle est une **PWA** : elle s'installe comme une appli et marche hors ligne après la première visite.
+
+- **iPhone** : ouvre [mathdlee.vercel.app](https://mathdlee.vercel.app) dans Safari → **Partager** → **Sur l'écran d'accueil**.
+- **Android** : menu de Chrome → **Installer l'application**.
+
+## Comment ça marche
+
+- **Aucun `eval`.** Les expressions (Cible π, Courbes) passent par un petit analyseur maison (`src/lab/expr.ts`) avec multiplication implicite (`2x`, `3π`, `x(x+1)`).
+- **Courbes comparées point par point** : 200 points d'échantillonnage, donc `2(x+1)` et `2x+2` sont la même réponse.
+- **Code isolé dans un Web Worker** créé à la volée, avec délai maximum. Python tourne grâce à [Pyodide](https://pyodide.org) (CPython compilé en WebAssembly), chargé seulement au premier usage.
+- **Résultats attendus calculés par une solution de référence**, ce qui permet de générer des tests cachés différents à chaque essai.
+- **Énigme du jour déterministe** : générateur pseudo-aléatoire (mulberry32) initialisé avec la date.
+- **Mise en forme du code** déduite des tokens (accolades pour JS/Java/C++, blocs `:` pour Python), vérifiée sur les 72 exercices.
+
+## Lancer le projet
 
 ```bash
 git clone https://github.com/alnrfLO/mathdle.git
 cd mathdle
 npm install
-npm run dev
+npm run dev      # serveur de développement
+npm run build    # build de production (dist/)
+npm run lint     # oxlint
 ```
 
-Build de production :
+Node 20 ou plus récent.
 
-```bash
-npm run build
-```
-
-## Structure du projet
+## Structure
 
 ```
 src/
-  game/            logique pure des maths (parser, moteur, générateur, config)
-  science/         logique pure des sciences (conversions, chimie, physique)
-  hooks/           state React par mode de jeu
-  components/      composants d'affichage
-  App.tsx          routage matière / mode de jeu, clavier physique
+├── game/          logique des maths (parser, moteur, générateur, banque de programmation)
+├── science/       chimie (équilibrage), physique (formules), conversions
+├── lab/           modes v2 : suites, cible π, courbes, élément, masse molaire,
+│                  oxydoréduction, unités, applications numériques, console, stats
+├── hooks/         état React par mode de jeu
+├── components/    affichage (calculatrice, grilles, menus)
+└── App.tsx        navigation et clavier physique
+public/
+├── manifest.webmanifest, sw.js   PWA
+└── logo-512.png, og-image.png    identité visuelle
 ```
 
 ## Crédits
 
-- Logo : [Sylvain Belevindiran](https://portfolio-sylvain-belevindiran.vercel.app)
+- **Logo** : [Sylvain Belevindiran](https://portfolio-sylvain-belevindiran.vercel.app)
+- **Python dans le navigateur** : [Pyodide](https://pyodide.org) (MPL 2.0)
+- **Polices** : JetBrains Mono et VT323 via [Fontsource](https://fontsource.org)
 
 ## Auteur
 
-**Rafael Antunes Oliveira** — étudiant en développement web (BUT MMI)
-- Portfolio : [rafatns.vercel.app](https://rafatns.vercel.app)
-- GitHub : [@alnrfLO](https://github.com/alnrfLO)
-- Contact : rafael.atns.dev@gmail.com
+**Rafael Antunes Oliveira**, étudiant en BUT MMI (développement web) à l'IUT de Bobigny.
 
-Projet personnel, à but pédagogique — fait pour s'entraîner, pas pour
-tricher en cours. Mentions légales disponibles directement dans l'app.
+[![Portfolio](https://img.shields.io/badge/Portfolio-rafatns.vercel.app-0b0f19?logo=vercel)](https://rafatns.vercel.app)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-rafatns-0A66C2?logo=linkedin)](https://linkedin.com/in/rafatns)
+[![GitHub](https://img.shields.io/badge/GitHub-alnrfLO-181717?logo=github)](https://github.com/alnrfLO)
+
+<sub>Projet personnel à but pédagogique : fait pour s'entraîner, pas pour tricher en cours.</sub>
