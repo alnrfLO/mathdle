@@ -35,7 +35,7 @@ const PY: Record<string, string> = {
 
 async function run(page: Page, code: string) {
   await page.locator(".code-editor").fill(code);
-  await page.locator(".lab").getByRole("button", { name: "▶ Exécuter" }).click();
+  await page.locator(".lab").getByRole("button", { name: "Exécuter" }).click();
   const msg = page.locator(".lab > .message");
   await expect(msg).not.toHaveText(/^(…|Chargement.*|Exécution.*)$/, { timeout: 90_000 });
   return msg.innerText();
@@ -57,7 +57,7 @@ async function solveEveryExercise(page: Page, solutions: Record<string, string>)
         continue;
       }
       seen.add(name);
-      expect(await run(page, solutions[name]), name).toMatch(/tests réussis.*✓/);
+      expect(await run(page, solutions[name]), name).toMatch(/tests réussis/);
       await page.getByText("Exercice suivant →").click();
     }
   }

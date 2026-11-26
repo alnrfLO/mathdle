@@ -291,20 +291,17 @@ function App() {
           )}
           {playMode === "serie" && subject === "math" && mathGrid && (
             <span className="calculator__lives" aria-label={`${mathdle.lives} vies sur ${mathdle.maxLives}`}>
-              {"♥".repeat(mathdle.lives)}
-              {"♡".repeat(mathdle.maxLives - mathdle.lives)}
+              VIES <strong>{mathdle.lives}/{mathdle.maxLives}</strong>
             </span>
           )}
           {playMode === "serie" && subject === "science" && sciSub === "equilibrage" && (
             <span className="calculator__lives" aria-label={`${chemistry.lives} vies sur ${chemistry.maxLives}`}>
-              {"♥".repeat(chemistry.lives)}
-              {"♡".repeat(chemistry.maxLives - chemistry.lives)}
+              VIES <strong>{chemistry.lives}/{chemistry.maxLives}</strong>
             </span>
           )}
           {playMode === "serie" && subject === "prog" && progEffective === "trous" && (
             <span className="calculator__lives" aria-label={`${progATrous.lives} vies sur ${progATrous.maxLives}`}>
-              {"♥".repeat(progATrous.lives)}
-              {"♡".repeat(progATrous.maxLives - progATrous.lives)}
+              VIES <strong>{progATrous.lives}/{progATrous.maxLives}</strong>
             </span>
           )}
           {playMode === "serie" && (
@@ -346,7 +343,7 @@ function App() {
 
             {subject === "menu" && dailyHub && (
               <div className="subject-menu daily-hub">
-                <p className="subject-menu__hint">ÉNIGMES DU JOUR · les mêmes pour tout le monde</p>
+                <p className="subject-menu__hint">Énigmes du jour, les mêmes pour tout le monde</p>
                 {[
                   { id: "math" as const, title: "MATHS", done: mathDaily.alreadyPlayedToday, streak: mathDaily.dayStreak },
                   { id: "science" as const, title: "SCIENCES", done: scienceDaily.alreadyPlayedToday, streak: scienceDaily.dayStreak },
@@ -368,8 +365,8 @@ function App() {
                     <span className="subject-menu__text">
                       <span className="subject-menu__title">{d.title}</span>
                       <span className="subject-menu__desc">
-                        {d.id === "prog" ? "Choisis ton langage" : d.done ? "Terminée ✓" : "À faire"}
-                        {d.streak > 0 && ` · série ${d.streak} j`}
+                        {d.id === "prog" ? "Choisis ton langage" : d.done ? "Terminée" : "À faire"}
+                        {d.streak > 0 && `, série ${d.streak} j`}
                       </span>
                     </span>
                   </button>
@@ -668,7 +665,7 @@ function App() {
                     className={"mode-btn" + (progType === "blanche" ? " mode-btn--active" : "")}
                     onClick={() => setProgType("blanche")}
                   >
-                    {progRunnable ? "Console ▶" : "Page blanche"}
+                    {progRunnable ? "Console" : "Page blanche"}
                   </button>
                 </div>
 

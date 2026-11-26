@@ -36,7 +36,7 @@ test.describe("help", () => {
     await openSeries(page, "MATHS");
     await page.getByRole("button", { name: "Voir la solution" }).click();
     await expect(page.locator(".banner")).toContainText("L'équation était");
-    await expect(page.locator(".calculator__lives")).toContainText("♥♥♡");
+    await expect(page.locator(".calculator__lives")).toContainText("VIES 2/3");
     await expect(page.locator(".helpbar")).toHaveCount(0);
   });
 

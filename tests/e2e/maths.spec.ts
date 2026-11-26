@@ -55,7 +55,7 @@ test.describe("pi target", () => {
 
   test("when the pi target is open, there is no difficulty choice", async ({ page }) => {
     await expect(page.locator(".softkey")).toHaveCount(0);
-    await expect(page.locator(".lab__eyebrow")).toContainText("AU MOINS 2");
+    await expect(page.locator(".lab__eyebrow")).toContainText("2 OPÉRATIONS MINIMUM");
   });
 
   test("when an equivalent expression is entered, it wins and one without π is refused", async ({ page }) => {

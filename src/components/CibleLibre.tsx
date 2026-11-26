@@ -22,7 +22,7 @@ export function CibleLibre({ target, input, config, message, onClear, onCheck }:
       </div>
 
       <p className="constraint">
-        {config.length} caractères · <b>{config.keys.join(" ")}</b>
+        {config.length} caractères, touches <b>{config.keys.join(" ")}</b>
       </p>
 
       <div className="cible-input">

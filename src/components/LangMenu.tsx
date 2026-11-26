@@ -11,7 +11,7 @@ const LANGS: ProgLang[] = ["javascript", "python", "java", "cpp"];
 export function LangMenu({ onChoose }: LangMenuProps) {
   return (
     <div className="subject-menu">
-      <p className="subject-menu__hint">Programmation · choisis un langage</p>
+      <p className="subject-menu__hint">Programmation : choisis un langage</p>
       {LANGS.map((lang, i) => (
         <button key={lang} type="button" className="subject-menu__item" onClick={() => onChoose(lang)}>
           <span className="subject-menu__num">{i + 1}</span>

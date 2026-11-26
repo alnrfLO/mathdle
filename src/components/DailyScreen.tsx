@@ -28,7 +28,7 @@ export function DailyScreen(props: MathDailyScreenProps) {
       <div className="daily">
         <p className="daily__eyebrow">ÉNIGME DU JOUR</p>
         <p className={"daily__result" + (lastWon ? " daily__result--won" : "")}>
-          {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui, perdu"}
+          {lastWon ? "Déjà réussie aujourd'hui" : "Déjà tentée aujourd'hui, perdu"}
         </p>
         <p className="daily__streak">Série : {dayStreak} jour{dayStreak > 1 ? "s" : ""}</p>
         <StoredShareButton title="Maths" />
@@ -39,7 +39,7 @@ export function DailyScreen(props: MathDailyScreenProps) {
 
   return (
     <div className="daily">
-      <p className="daily__eyebrow">ÉNIGME DU JOUR · SÉRIE {dayStreak} J</p>
+      <p className="daily__eyebrow">ÉNIGME DU JOUR</p>
       <div className={"message" + (message.variant ? ` message--${message.variant}` : "")}>
         {message.text}
       </div>

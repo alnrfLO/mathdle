@@ -68,7 +68,7 @@ export function CiblePi() {
   };
 
   return (
-    <LabShell eyebrow={`CIBLE π · AU MOINS ${minOps} OPÉRATION${minOps > 1 ? "S" : ""}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow={`CIBLE π (${minOps} OPÉRATIONS MINIMUM)`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Construis une expression égale à</div>
         <div className="lab__big">{target.label}</div>

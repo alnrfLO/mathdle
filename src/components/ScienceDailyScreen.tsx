@@ -34,7 +34,7 @@ export function ScienceDailyScreen({
       <div className="daily">
         <p className="daily__eyebrow">ÉNIGME DU JOUR</p>
         <p className={"daily__result" + (lastWon ? " daily__result--won" : "")}>
-          {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui, perdu"}
+          {lastWon ? "Déjà réussie aujourd'hui" : "Déjà tentée aujourd'hui, perdu"}
         </p>
         <p className="daily__streak">Série : {dayStreak} jour{dayStreak > 1 ? "s" : ""}</p>
         <StoredShareButton title="Sciences" />
@@ -45,7 +45,7 @@ export function ScienceDailyScreen({
 
   return (
     <div className="science">
-      <p className="science__eyebrow">ÉNIGME DU JOUR · SÉRIE {dayStreak} J</p>
+      <p className="science__eyebrow">ÉNIGME DU JOUR</p>
 
       <div className="science__readout">
         <div className="science__question">

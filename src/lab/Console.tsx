@@ -81,7 +81,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
     setLines(ls);
     const passed = ls.filter((l) => l.got?.ok && deepEqual(l.got.v, l.expected)).length;
     if (passed === ls.length) {
-      setMsg(ok(`${passed}/${ls.length} tests réussis, dont ${hidden.length} cachés tirés au hasard ✓`));
+      setMsg(ok(`${passed}/${ls.length} tests réussis, dont ${hidden.length} cachés tirés au hasard`));
       setSolved(true);
       if (!counted) recordResult("console", true);
       setCounted(true);
@@ -115,7 +115,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
   return (
     <div className="lab">
       <p className="lab__eyebrow">
-        CONSOLE {lang === "python" ? "PYTHON" : "JAVASCRIPT"} · VRAIE EXÉCUTION · {ex.visible.length} TESTS VISIBLES + TESTS CACHÉS
+        CONSOLE {lang === "python" ? "PYTHON" : "JAVASCRIPT"}, {ex.visible.length} TESTS VISIBLES ET DES TESTS CACHÉS
       </p>
       <div className="lab__card" style={{ textAlign: "left" }}>
         <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--ink)" }}>
@@ -152,12 +152,12 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
                 </span>
                 <span className={pass ? "lab__ok" : "lab__ko"}>
                   {pass
-                    ? "✓"
+                    ? "OK"
                     : l.hidden
-                      ? "✗"
+                      ? "raté"
                       : l.got?.ok
-                        ? `✗ ${pyShow(l.got.v, lang)} au lieu de ${pyShow(l.expected, lang)}`
-                        : `✗ ${l.got?.e ?? "erreur"}`}
+                        ? `${pyShow(l.got.v, lang)} au lieu de ${pyShow(l.expected, lang)}`
+                        : `${l.got?.e ?? "erreur"}`}
                 </span>
               </li>
             );
@@ -180,7 +180,7 @@ export function Console({ lang, level }: { lang: Lang; level: ProgLevel }) {
               Passer
             </button>
             <button type="button" className="science-btn science-btn--primary" onClick={run} disabled={busy}>
-              {busy ? "…" : "▶ Exécuter"}
+              {busy ? "…" : "Exécuter"}
             </button>
           </>
         )}

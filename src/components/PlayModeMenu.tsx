@@ -10,7 +10,7 @@ interface PlayModeMenuProps {
 export function PlayModeMenu({ subjectLabel, dayStreak, alreadyPlayedToday, onChoose }: PlayModeMenuProps) {
   return (
     <div className="subject-menu">
-      <p className="subject-menu__hint">{subjectLabel} · choisis un mode</p>
+      <p className="subject-menu__hint">{subjectLabel} : choisis un mode</p>
       <button type="button" className="subject-menu__item" onClick={() => onChoose("serie")}>
         <span className="subject-menu__num">1</span>
         <span className="subject-menu__text">

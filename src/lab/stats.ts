@@ -8,19 +8,19 @@ export interface ModeStats {
 const KEY = "mathdle_stats_v1";
 
 export const MODE_LABELS: Record<string, string> = {
-  "daily-math": "Énigme du jour · Maths",
-  "daily-science": "Énigme du jour · Sciences",
-  "daily-prog": "Énigme du jour · Programmation",
-  suites: "Maths · Suites",
-  pi: "Maths · Cible π",
-  courbes: "Maths · Courbes",
-  element: "Chimie · Élément mystère",
-  masse: "Chimie · Masse molaire",
-  redox: "Chimie · Oxydoréduction",
-  unites: "Physique · Unités",
-  an: "Physique · Applications numériques",
-  chaine: "Physique · Conversions en chaîne",
-  console: "Programmation · Console",
+  "daily-math": "Énigme du jour, Maths",
+  "daily-science": "Énigme du jour, Sciences",
+  "daily-prog": "Énigme du jour, Programmation",
+  suites: "Maths, Suites",
+  pi: "Maths, Cible π",
+  courbes: "Maths, Courbes",
+  element: "Chimie, Élément mystère",
+  masse: "Chimie, Masse molaire",
+  redox: "Chimie, Oxydoréduction",
+  unites: "Physique, Unités",
+  an: "Physique, Applications numériques",
+  chaine: "Physique, Conversions en chaîne",
+  console: "Programmation, Console",
 };
 
 export function loadStats(): Record<string, ModeStats> {

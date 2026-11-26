@@ -91,7 +91,7 @@ export function Unites({ level }: { level: Difficulty }) {
   };
 
   return (
-    <LabShell eyebrow="TROUVER L'UNITÉ · 3 ESSAIS" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow="TROUVER L'UNITÉ (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Dans quelle unité SI s'exprime…</div>
         <div className="lab__big">{q.q}</div>
@@ -238,7 +238,7 @@ export function Applications({ level }: { level: Difficulty }) {
   };
 
   return (
-    <LabShell eyebrow="APPLICATION NUMÉRIQUE · VALEUR + UNITÉ" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow="APPLICATION NUMÉRIQUE, VALEUR ET UNITÉ" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div style={{ fontSize: "0.85rem", color: "var(--ink)" }}>{p.text}</div>
         <div className="lab__small" style={{ marginTop: 6 }}>Précision acceptée : 2 %</div>
@@ -369,7 +369,7 @@ export function Chaine({ level }: { level: Difficulty }) {
   };
 
   return (
-    <LabShell eyebrow="CONVERSIONS EN CHAÎNE · 3 ESSAIS" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow="CONVERSIONS EN CHAÎNE (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Convertis</div>
         <div className="lab__big">

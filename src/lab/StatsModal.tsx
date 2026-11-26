@@ -40,7 +40,7 @@ export function StatsModal({ onClose }: { onClose: () => void }) {
             <tbody>
               {entries.map(([id, s]) => (
                 <tr key={id} style={{ borderTop: "1px solid rgba(0,0,0,0.1)" }}>
-                  <td style={{ padding: "4px 0" }}>{MODE_LABELS[id] ?? id.replace("daily-prog-", "Énigme du jour · Code ")}</td>
+                  <td style={{ padding: "4px 0" }}>{MODE_LABELS[id] ?? id.replace("daily-prog-", "Énigme du jour, code ")}</td>
                   <td>{s.played}</td>
                   <td>{Math.round((s.won / s.played) * 100)}</td>
                   <td>{s.streak}</td>
@@ -85,7 +85,7 @@ export function gridToEmoji(rows: GridRow[]): string {
 export function buildShareText({ title, won, rows, max, extra }: { title: string; won: boolean; rows?: GridRow[]; max: number; extra?: string }): string {
   const tries = rows ? rows.length : Number(extra);
   const score = won ? `${tries}/${max}` : `X/${max}`;
-  return [`Mathdle #${puzzleNumber()} · ${title} ${score}`, rows ? gridToEmoji(rows) : "", SITE].filter(Boolean).join("\n");
+  return [`Mathdle #${puzzleNumber()} ${title} ${score}`, rows ? gridToEmoji(rows) : "", SITE].filter(Boolean).join("\n");
 }
 
 const shareKey = (title: string) => `mathdle_share_${title}`;

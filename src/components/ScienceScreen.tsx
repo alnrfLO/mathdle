@@ -14,7 +14,7 @@ interface ScienceScreenProps {
 export function ScienceScreen({ question, input, message, streak, onSkip, onCheck }: ScienceScreenProps) {
   return (
     <div className="science">
-      <p className="science__eyebrow">CONVERSION · SÉRIE {streak}</p>
+      <p className="science__eyebrow">CONVERSION (SÉRIE {streak})</p>
 
       <div className="science__readout">
         <div className="science__question">

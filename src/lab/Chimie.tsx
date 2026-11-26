@@ -51,7 +51,7 @@ export function ElementMystere({ level }: { level: Difficulty }) {
   const arrow = (a: number, b: number) => (a === b ? "" : a < b ? " ↑" : " ↓");
 
   return (
-    <LabShell eyebrow={`ÉLÉMENT MYSTÈRE · ESSAI ${Math.min(rows.length + 1, EL_MAX)}/${EL_MAX} · Z ≤ ${POOL[level]}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow={`ÉLÉMENT MYSTÈRE (ESSAI ${Math.min(rows.length + 1, EL_MAX)}/${EL_MAX}, Z ≤ ${POOL[level]})`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__small" style={{ textAlign: "center" }}>
         Vert = exact, jaune = proche. Les flèches disent si la cible est plus haut ou plus bas.
       </div>
@@ -142,7 +142,7 @@ export function MasseMolaire({ level }: { level: Difficulty }) {
   const used = Array.from(new Set(f.match(/[A-Z][a-z]?/g) ?? []));
 
   return (
-    <LabShell eyebrow="MASSE MOLAIRE · 3 ESSAIS" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow="MASSE MOLAIRE (3 ESSAIS)" message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Calcule la masse molaire de</div>
         <div className="lab__big">{sub(f)}</div>
@@ -150,7 +150,7 @@ export function MasseMolaire({ level }: { level: Difficulty }) {
           {used.map((s) => {
             const e = findElement(s);
             return e ? `M(${s}) = ${fmt(e.mass, 4)}` : "";
-          }).join(" · ")}{" "}
+          }).join(", ")}{" "}
           g/mol
         </div>
       </div>
@@ -223,7 +223,7 @@ export function Redox({ level }: { level: Difficulty }) {
     const t = tries + 1;
     setTries(t);
     if (wrong === 0) {
-      setMsg(ok("Demi-équation équilibrée ✓"));
+      setMsg(ok("Demi-équation équilibrée"));
       setDone(true);
       recordResult("redox", true);
     } else if (t >= 4) {
@@ -253,7 +253,7 @@ export function Redox({ level }: { level: Difficulty }) {
     ));
 
   return (
-    <LabShell eyebrow={`OXYDORÉDUCTION · COUPLE ${h.couple}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
+    <LabShell eyebrow={`OXYDORÉDUCTION, COUPLE ${h.couple}`} message={msg} done={done} onSkip={next} onCheck={check} onNext={next}>
       <div className="lab__card">
         <div className="lab__small">Équilibre la demi-équation (milieu acide). Case vide = 1.</div>
         <div className="lab__eq">

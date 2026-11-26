@@ -44,7 +44,7 @@ export function SubjectMenu({ onChoose, onDaily, onStats, dailyDone, dayStreak }
           <span className="door__icon door__icon--date">{new Date().getDate()}/{new Date().getMonth() + 1}</span>
           <span className="door__title">ÉNIGME DU JOUR</span>
           <span className="door__desc">
-            {dailyDone ? "Maths faite ✓ · " : ""}maths, sciences, code{dayStreak > 0 ? ` · série ${dayStreak} j` : ""}
+            {dailyDone ? "Maths faite, " : ""}maths, sciences, code{dayStreak > 0 ? `, série ${dayStreak} j` : ""}
           </span>
         </button>
       </div>

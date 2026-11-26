@@ -76,7 +76,7 @@ test("when every daily puzzle is played, the stats count each one", async ({ pag
   await page.keyboard.press("Enter");
   await page.goto("/");
   await page.getByText("Mes statistiques").click();
-  await expect(page.locator(".legal-sheet")).toContainText("Énigme du jour · Maths");
+  await expect(page.locator(".legal-sheet")).toContainText("Énigme du jour, Maths");
   await expect(page.locator(".legal-sheet")).toContainText("100 %");
 });
 

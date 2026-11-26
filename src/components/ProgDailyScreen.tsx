@@ -39,9 +39,9 @@ export function ProgDailyScreen({
   if (alreadyPlayedToday && !gameOver) {
     return (
       <div className="daily">
-        <p className="daily__eyebrow">ÉNIGME DU JOUR · {langLabel.toUpperCase()}</p>
+        <p className="daily__eyebrow">ÉNIGME DU JOUR EN {langLabel.toUpperCase()}</p>
         <p className={"daily__result" + (lastWon ? " daily__result--won" : "")}>
-          {lastWon ? "Déjà réussie aujourd'hui ✓" : "Déjà tentée aujourd'hui, perdu"}
+          {lastWon ? "Déjà réussie aujourd'hui" : "Déjà tentée aujourd'hui, perdu"}
         </p>
         <p className="daily__streak">Série : {dayStreak} jour{dayStreak > 1 ? "s" : ""}</p>
         <StoredShareButton title={`Code ${langLabel}`} />
@@ -52,7 +52,7 @@ export function ProgDailyScreen({
 
   return (
     <div className="daily">
-      <p className="daily__eyebrow">ÉNIGME DU JOUR · {langLabel.toUpperCase()} · SÉRIE {dayStreak} J</p>
+      <p className="daily__eyebrow">ÉNIGME DU JOUR EN {langLabel.toUpperCase()}</p>
       <p className="chem__hint">{enonce}</p>
       <div className={"message" + (message.variant ? ` message--${message.variant}` : "")}>
         {message.text}

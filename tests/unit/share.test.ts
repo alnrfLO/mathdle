@@ -19,7 +19,7 @@ describe("share text", () => {
   it("when the puzzle is shared, the first line has the puzzle number, the subject and the score", () => {
     const text = buildShareText({ title: "Maths", won: true, rows: [row(["correct"])], max: 6 });
     const [head, grid, site] = text.split("\n");
-    expect(head).toMatch(/^Mathdle #\d+ · Maths 1\/6$/);
+    expect(head).toMatch(/^Mathdle #\d+ Maths 1\/6$/);
     expect(grid).toBe("🟩");
     expect(site).toBe("mathdlee.vercel.app");
   });

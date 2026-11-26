@@ -112,7 +112,7 @@ export function Suites({ level }: { level: Difficulty }) {
     setTries(t);
     setInput("");
     if (t.length >= MAX) {
-      setMsg(err(`Perdu, c'était ${fmt(suite.next, 8)} · ${suite.nature} : ${suite.formule}`));
+      setMsg(err(`Perdu, c'était ${fmt(suite.next, 8)} (${suite.nature} : ${suite.formule})`));
       setDone(true);
       recordResult("suites", false);
     } else setMsg(err(`Raté, ${hint}`));
@@ -120,7 +120,7 @@ export function Suites({ level }: { level: Difficulty }) {
 
   return (
     <LabShell
-      eyebrow={`SUITES · ESSAI ${Math.min(tries.length + 1, MAX)}/${MAX}`}
+      eyebrow={`SUITES (ESSAI ${Math.min(tries.length + 1, MAX)}/${MAX})`}
       message={msg}
       done={done}
       onSkip={next}
