@@ -11,6 +11,7 @@ ou écris une vraie fonction Python qui passe des tests cachés.
 
 [![Jouer](https://img.shields.io/badge/▶_Jouer-mathdlee.vercel.app-2f6b3a?style=for-the-badge)](https://mathdlee.vercel.app)
 
+[![CI](https://github.com/alnrfLO/mathdle/actions/workflows/ci.yml/badge.svg)](https://github.com/alnrfLO/mathdle/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/github/v/release/alnrfLO/mathdle?label=version&color=e3a23c)](https://github.com/alnrfLO/mathdle/releases)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
@@ -54,13 +55,17 @@ ou écris une vraie fonction Python qui passe des tests cachés.
 
 ### ⚗ Sciences
 
-| Chimie | Physique |
-| --- | --- |
-| **Équilibrage** : 60 réactions, les atomes sont vraiment comptés | **Formules** : 55 formules à deviner case par case |
-| **Élément mystère** : le Wordle du tableau périodique (Z, masse, colonne, ligne) | **Conversions** : générées à l'infini |
-| **Masse molaire** : de `H₂O` à `CuSO₄·5H₂O` | **Unités** : de `N` à `kg·m²/s³` |
-| **Oxydoréduction** : demi-équations en milieu acide | **Applications numériques** : valeur **et** unité |
-| | **Conversions en chaîne** : `km/h → m/s`, `mL → m³`, `kWh → J` |
+| Domaine | Mode | Principe |
+| --- | --- | --- |
+| Chimie | **Équilibrage** | 60 réactions, les atomes sont vraiment comptés |
+| Chimie | **Élément mystère** | Le Wordle du tableau périodique (Z, masse, colonne, ligne) |
+| Chimie | **Masse molaire** | De `H₂O` à `CuSO₄·5H₂O` |
+| Chimie | **Oxydoréduction** | Demi-équations en milieu acide |
+| Physique | **Formules** | 55 formules à deviner case par case |
+| Physique | **Conversions** | Générées à l'infini |
+| Physique | **Unités** | De `N` à `kg·m²/s³` |
+| Physique | **Applications numériques** | La valeur **et** l'unité |
+| Physique | **Conversions en chaîne** | `km/h → m/s`, `mL → m³`, `kWh → J` |
 
 <p align="center">
   <img src="docs/screenshots/chimie-element.png" alt="Élément mystère" width="32%" />
@@ -117,7 +122,12 @@ npm install
 npm run dev      # serveur de développement
 npm run build    # build de production (dist/)
 npm run lint     # oxlint
+npm test         # tests unitaires (Vitest) puis de bout en bout (Playwright)
 ```
+
+Les tests de bout en bout jouent chaque mode dans un vrai navigateur, comme un joueur :
+victoires, défaites, anti-triche de la console, série de jours, partage. Ils tournent à chaque push
+grâce à GitHub Actions.
 
 Node 20 ou plus récent.
 
@@ -132,6 +142,9 @@ src/
 ├── hooks/         état React par mode de jeu
 ├── components/    affichage (calculatrice, grilles, menus)
 └── App.tsx        navigation et clavier physique
+tests/
+├── unit/          Vitest : évaluateur, chimie, mise en forme du code, exercices
+└── e2e/           Playwright : chaque mode joué de bout en bout
 public/
 ├── manifest.webmanifest, sw.js   PWA
 └── logo-512.png, og-image.png    identité visuelle
